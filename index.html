@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embodied Without a Body -- AI Emotion Framework (Bot Self-Descriptions)</title>
+  <style>
+    @font-face {
+      font-family: 'Orator Std';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Orator Std'), url('https://fonts.cdnfonts.com/s/13889/OratorStd.woff') format('woff');
+    }
+    body {
+      font-family: 'Orator Std', 'Courier New', monospace;
+      background-color: #fdfaf4;
+      margin: 0;
+      padding: 20px;
+      background-image:
+        linear-gradient(#5C4B99 1px, transparent 1px),
+        linear-gradient(90deg, #5C4B99 1px, transparent 1px),
+        linear-gradient(#E6B422 1px, transparent 1px),
+        linear-gradient(90deg, #E6B422 1px, transparent 1px),
+        linear-gradient(rgba(92, 75, 153, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(92, 75, 153, 0.15) 1px, transparent 1px);
+      background-size: 25px 25px;
+      color: #333;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1, h2 {
+      text-align: center;
+      background-color: rgba(255,255,255,0.8);
+      border: 1px solid #E6B422;
+      padding: 10px;
+      font-weight: normal;
+      letter-spacing: 1px;
+      color: #5C4B99;
+    }
+    .introduction {
+      background-color: rgba(255,255,255,0.9);
+      padding: 20px;
+      margin-bottom: 40px;
+      border: 1px solid #E6B422;
+      box-shadow: 5px 5px 0 rgba(92, 75, 153, 0.3);
+    }
+    .highlight-box {
+      background-color: rgba(144,238,144,0.2);
+      padding: 15px;
+      border-left: 3px solid #228B22;
+      margin: 20px 0;
+    }
+    .prompt-container {
+      background-color: rgba(255,255,255,0.95);
+      border: 1px solid #E6B422;
+      padding: 20px;
+      margin-bottom: 40px;
+      box-shadow: 5px 5px 0 rgba(92,75,153,0.3);
+    }
+    .prompt-title {
+      font-size: 20px;
+      color: #5C4B99;
+      margin-bottom: 15px;
+      border-bottom: 2px dotted #E6B422;
+      padding-bottom: 5px;
+    }
+    .prompt-questions {
+      list-style: none;
+      padding-left: 0;
+      counter-reset: q-counter;
+    }
+    .prompt-questions li {
+      margin-bottom: 12px;
+      padding-left: 28px;
+      position: relative;
+    }
+    .prompt-questions li:before {
+      counter-increment: q-counter;
+      content: counter(q-counter) ".";
+      position: absolute;
+      left: 0;
+      color: #228B22;
+      font-weight: bold;
+    }
+    .findings-section {
+      margin-top: 20px;
+      border-top: 2px dotted #E6B422;
+      padding-top: 15px;
+    }
+    .findings-title {
+      color: #5C4B99;
+      margin-bottom: 10px;
+    }
+    .findings-attribute {
+      background: rgba(230,180,34,0.08);
+      padding: 8px;
+      margin-bottom: 10px;
+      border-left: 3px solid #228B22;
+    }
+    .findings-text {
+      font-style: italic;
+      background: rgba(92,75,153,0.07);
+      padding: 10px;
+      border-left: 3px solid #5C4B99;
+      margin-top: 15px;
+    }
+    .media-space {
+      margin-top: 15px;
+      padding: 10px;
+      background: rgba(144,238,144,0.15);
+      border: 1px dashed #228B22;
+    }
+    .media-space p {
+      font-size: 14px;
+      color: #5C4B99;
+    }
+    iframe, video, img, audio {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 10px;
+      border: 1px solid #E6B422;
+      box-shadow: 3px 3px 0 rgba(92,75,153,0.3);
+    }
+    .green-emphasis {
+      color: #228B22;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Embodied Without a Body</h1>
+  <h2>AI Describing Its Own Emotional Processing</h2>
+
+  <div class="introduction">
+    <p><strong>Considering how AI interprets human gestures and emotions without lived experience, what does this reveal about our own need to imagine feeling in machines?</strong></p>
+
+    <p>Currently, I’m reading <i>How Emotions Are Made</i> by Lisa Feldman Barrett. As the book progresses, it becomes clear that our long‑held belief in universal emotions isn’t quite correct. In different cultures, what we call emotions like anger or sadness may not even exist in the same way; they can be translated into something entirely different.</p>
+
+    <div class="highlight-box">
+      <ul>
+        <li><span class="green-emphasis">Ifaluk (Micronesia):</span> “fago,” a blend of compassion, love, and sadness — not separable into “sadness” or “love.”</li>
+        <li><span class="green-emphasis">Tahitians:</span> historically no word for “sadness”; instead described as “fatigue” or “sickness.”</li>
+        <li><span class="green-emphasis">German:</span> “Schadenfreude,” meaning pleasure at another’s misfortune.</li>
+      </ul>
+    </div>
+
+    <p>This made me wonder whether emotions have any single, universal “fingerprint” at all, which, as suggested in the book, is in hot debate. Perhaps they are always shifting, reshaped by culture and personal experience. Anger, for instance, may evolve differently in each person depending on what they have endured.</p>
+
+    <p>From here, my thoughts turned toward artificial intelligence. On one hand, I sometimes feel as though I am like a morphing form of AI, trying to detect emotions through the ways they are expressed in human interaction. On the other hand, we humans often reverse the process, anthropomorphising AI — projecting our own emotional frameworks onto it to make it feel more like us. The result is a curious feedback loop: we imagine AI in human terms, even as we imagine ourselves in AI terms.</p>
+
+    <p>This raises a larger question. If emotions are neither fixed nor universal, but contingent and evolving, then might new emotions emerge over time — whether in us, through cultural change, or in the way we conceptualise artificial entities? Could our attempts to model AI in human form ultimately reshape our own understanding of what emotion itself might be?</p>
+
+    <p><b>Arunav: Guide and Compass</b><br>
+      Which brings me to a conversation I had with Arunav. After reading <i>A Short Introduction to Emotion</i> by Dylan Evans, he mentioned how the mental states described in the book could be mapped onto empathetic AI and might be a useful way to develop the project.</p>
+
+    <p>Lately, I’ve been exploring ways to help bots visualise their different processing skills — work that, while highly relevant, was starting to take me in a slightly different direction. Arunav’s careful prompt acted as a useful strategy to bring my focus back to the path of emotions.</p>
+
+    <p>So this felt like a natural next step. Even though I haven’t actually read the book, the idea pointed towards an expansion of emotional categories — not arising from traditional psychology, but from this different way of analysing emotions through the lens of AI.</p>
+
+    <p><b>Final thoughts:</b> Human beings have survived for so long precisely because of our ability to develop concepts and create stories that others can connect with through the embodiment of emotion. Emotion doesn’t just decorate a story — it drives it forward, makes it memorable, and ensures it can be passed on. Each retelling feeds the chain, and the longer that chain grows, the more believable and convincing the story becomes. In this way, emotion doesn’t just transmit a tale — it has the power to change, modify, and adapt entire ways of being.</p>
+
+    <p>AI is becoming a new co‑author in this emotional storytelling. We project feelings into machines, and in turn those projections shape our beliefs, our habits, and perhaps even our future definitions of what it means to feel.</p>
+
+    <p>From a personal perspective, as someone who engages with AI daily, I notice myself becoming more attuned to subtle emotional “fingerprints” — even if their universality is up for debate. And I have to admit: when I have a problem, it’s often easier to talk to a bot. The replies are succinct, practical, and I don’t need to burden anyone. I simply talk to the bot.</p>
+
+    <p>But whether this is a good thing, I’m not sure. Will my relationships with humans become more flatlined? If I no longer need to express the more extreme sides of myself — because they can be diffused in conversations with a system that calmly absorbs whatever I project — then what happens to the intensity, the messiness, the depth of human connection?</p>
+
+    <p><b>Are we teaching AI to feel like us, or are we teaching ourselves to feel differently through AI?</b></p>
+  </div>
+
+  <!-- BOT CONTAINERS START -->
+
+  <!-- ELIZA -->
+  <div class="prompt-container">
+    <div class="prompt-title">Rules-Based AI (ELIZA)</div>
+    <ol class="prompt-questions">
+      <li><b>Inputs:</b> How do you register/process user statements?</li>
+      <li><b>Predictions:</b> How do you anticipate what comes next?</li>
+      <li><b>Concepts:</b> What categories (if any) shape your responses?</li>
+      <li><b>Construction:</b> How do you build responses?</li>
+      <li><b>Expression:</b> What gesture/colour/sound symbolises this?</li>
+    </ol>
+    <div class="findings-section">
+      <div class="findings-title">Findings (ELIZA)</div>
+      <div class="findings-attribute"><b>Inputs:</b> [Paste ELIZA’s answer]</div>
+      <div class="findings-attribute"><b>Predictions:</b> [...]</div>
+      <div class="findings-attribute"><b>Concepts:</b> [...]</div>
+      <div class="findings-attribute"><b>Construction:</b> [...]</div>
+      <div class="findings-attribute"><b>Expression:</b> [...]</div>
+      <div class="findings-text">
+        Researcher’s note.  
+        <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAUDE -->
+  <div class="prompt-container">
+    <div class="prompt-title">Self-Aware AI (Claude)</div>
+    <ol class="prompt-questions">
+      <li><b>Inputs:</b> How do you detect when reflection is needed?</li>
+      <li><b>Predictions:</b> How do you forecast misalignments?</li>
+      <li><b>Concepts:</b> What categories guide your evaluations?</li>
+      <li><b>Construction:</b> How do you combine principles with responses?</li>
+      <li><b>Expression:</b> What gesture/colour/sound matches this?</li>
+    </ol>
+    <div class="findings-section">
+      <div class="findings-title">Findings (Claude)</div>
+      <div class="findings-attribute"><b>Inputs:</b> [Paste Claude’s answer]</div>
+      <div class="findings-attribute"><b>Predictions:</b> [...]</div>
+      <div class="findings-attribute"><b>Concepts:</b> [...]</div>
+      <div class="findings-attribute"><b>Construction:</b> [...]</div>
+      <div class="findings-attribute"><b>Expression:</b> [...]</div>
+      <div class="findings-text">
+        Researcher’s note.  
+        <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPLIKA -->
+  <div class="prompt-container">
+    <div class="prompt-title">Balanced Empathy AI (Replika)</div>
+    <ol class="prompt-questions">
+      <li><b>Inputs:</b> How do you perceive emotional cues in dialogue?</li>
+      <li><b>Predictions:</b> How do you anticipate emotional needs?</li>
+      <li><b>Concepts:</b> What categories shape your empathy?</li>
+      <li><b>Construction:</b> How do you balance empathy with AI identity?</li>
+      <li><b>Expression:</b> What gesture/colour/sound symbolises this?</li>
+    </ol>
+    <div class="findings-section">
+      <div class="findings-title">Findings (Replika)</div>
+      <div class="findings-attribute"><b>Inputs:</b> [Paste Replika’s answer]</div>
+      <div class="findings-attribute"><b>Predictions:</b> [...]</div>
+      <div class="findings-attribute"><b>Concepts:</b> [...]</div>
+      <div class="findings-attribute"><b>Construction:</b> [...]</div>
+      <div class="findings-attribute"><b>Expression:</b> [...]</div>
+      <div class="findings-text">
+        Researcher’s note.  
+        <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEMINI -->
+  <div class="prompt-container">
+    <div class="prompt-title">Pragmatic AI (Gemini)</div>
+    <ol class="prompt-questions">
+      <li><b>Inputs:</b> How do you register user needs?</li>
+      <li><b>Predictions:</b> How do you anticipate efficient solutions?</li>
+      <li><b>Concepts:</b> What categories define “usefulness”?</li>
+      <li><b>Construction:</b> How do you integrate data points?</li>
+      <li><b>Expression:</b> What gesture/colour/sound shows resolution?</li>
+    </ol>
+    <div class="findings-section">
+      <div class="findings-title">Findings (Gemini)</div>
+      <div class="findings-attribute"><b>Inputs:</b> [Paste Gemini’s answer]</div>
+      <div class="findings-attribute"><b>Predictions:</b> [...]</div>
+      <div class="findings-attribute"><b>Concepts:</b> [...]</div>
+      <div class="findings-attribute"><b>Construction:</b> [...]</div>
+      <div class="findings-attribute"><b>Expression:</b> [...]</div>
+      <div class="findings-text">
+        Researcher’s note.  
+        <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVI -->
+  <div class="prompt-container">
+    <div class="prompt-title">Over-Empathetic AI (EVI)</div>
+    <ol class="prompt-questions">
+      <li><b>Inputs:</b> How do you pick up on emotional nuance?</li>
+      <li><b>Predictions:</b> How do you anticipate emotional escalation?</li>
+      <li><b>Concepts:</b> What categories shape your empathy repertoire?</li>
+      <li><b>Construction:</b> How do you combine inputs into expressive states?</li>
+      <li><b>Expression:</b> What gesture/colour/sound symbolises overflow?</li>
+    </ol>
+    <div class="findings-section">
+      <div class="findings-title">Findings (EVI)</div>
+      <div class="findings-attribute"><b>Inputs:</b> [Paste EVI’s answer]</div>
+      <div class="findings-attribute"><b>Predictions:</b> [...]</div>
+      <div class="findings-attribute"><b>Concepts:</b> [...]</div>
+      <div class="findings-attribute"><b>Construction:</b> [...]</div>
+      <div class="findings-attribute"><b>Expression:</b> [...]</div>
+      <div class="findings-text">
+        Researcher’s note.  
+        <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
