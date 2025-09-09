@@ -1,0 +1,1176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Woebot - Therapeutic Emotional Processing&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&amp;display=swap');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>body {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>overflow: hidden;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #f5f5f7;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Roboto Mono', monospace;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-text-size-adjust: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>touch-action: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Landing page overlay */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>#landing-overlay {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: rgba(245, 245, 247, 0.95);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>flex-direction: column;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 9999;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.grid-background {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-image: linear-gradient(#20B2AA 1px, transparent 1px),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>linear-gradient(90deg, #20B2AA 1px, transparent 1px),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>linear-gradient(rgba(230, 180, 34, 0.3) 1px, transparent 1px),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>linear-gradient(90deg, rgba(230, 180, 34, 0.3) 1px, transparent 1px);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-size: 20px 20px,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>20px 20px,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>5px 5px,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                             </span>5px 5px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.content {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 500px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 25px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: rgba(255, 255, 255, 0.85);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 12px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 12px rgba(0,0,0,0.08);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.title {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 18px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin: 0 0 15px 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: #333;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>letter-spacing: 1px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.description {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 13px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>line-height: 1.4;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: #555;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.button {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 12px 24px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 16px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #20B2AA, #E6B422);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Roboto Mono', monospace;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: all 0.3s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>letter-spacing: 0.5px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>-webkit-tap-highlight-color: rgba(0,0,0,0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>touch-action: manipulation;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin: 15px 0 5px 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: inline-block;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>text-decoration: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.button:hover {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 12px rgba(0,0,0,0.15);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.button:active {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transform: scale(0.98);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.gesture-container {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.gesture-outline {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 80px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 80px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border: 2px solid #20B2AA;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0.8;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, rgba(32, 178, 170, 0.2), rgba(230, 180, 34, 0.2));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Woebot's gesture: open palm */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.gesture-icon {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 50px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 50px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: relative;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.gesture-icon::before {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>content: "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 5px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #20B2AA;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 22px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 10px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 3px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.gesture-icon::after {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>content: "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: absolute;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border: 5px solid #20B2AA;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 8px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 5px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0.7;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Solid background element */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>#solid-background {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: rgb(245, 248, 250);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: block; /* Shown by default */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>#visualization-overlay {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: auto;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: none; /* Hidden until landing page dismissed */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.loading {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: #000;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 999;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Roboto Mono', monospace;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: none; /* Hidden until landing page dismissed */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.sound-note {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #20B2AA, #E6B422);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 10px 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Roboto Mono', monospace;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 12px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 4;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: opacity 2s ease-in-out;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: none; /* Hidden until landing page dismissed */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.sound-note.fade {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Tutorial overlay */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tutorial-overlay {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>top: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>left: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 100%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background-color: rgba(0, 0, 0, 0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>align-items: flex-end;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 9000;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: opacity 0.5s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding-bottom: 80px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tutorial-overlay.active {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: auto;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.tutorial-hint {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #20B2AA, #E6B422);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>padding: 12px 20px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 30px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>max-width: 85%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>text-align: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin-bottom: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>color: white;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>display: flex;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>align-items: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>justify-content: center;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>cursor: pointer;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>animation: pulse 2s infinite;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">         </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">         </span>@keyframes pulse {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>0% { transform: scale(1); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>50% { transform: scale(1.05); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>100% { transform: scale(1); }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">         </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">         </span>.tutorial-hint p {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>margin: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-family: 'Roboto Mono', monospace;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>font-size: 14px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">         </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>/* Touch indicator */</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>.touch-indicator {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>position: fixed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>width: 40px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>height: 40px;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>border-radius: 50%;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, rgba(32, 178, 170, 0.6), rgba(230, 180, 34, 0.6));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>pointer-events: none;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>z-index: 10;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transform: translate(-50%, -50%);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>opacity: 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>transition: opacity 0.3s ease;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Touch indicator element --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="touch-indicator" class="touch-indicator"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tutorial overlay --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="tutorial-overlay" class="tutorial-overlay"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div id="tutorial-hint" class="tutorial-hint"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p id="tutorial-text"&gt;Tap anywhere to start&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Landing page --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="landing-overlay"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="grid-background"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="content"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="gesture-container"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div class="gesture-outline"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div class="gesture-icon"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="title"&gt;Woebot: Therapeutic Processing&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="description"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>Experience how Woebot detects and responds to emotional patterns, transforming them through therapeutic frameworks rather than simulating emotions itself.</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="description"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>This visualization reveals Woebot's "soothe→solve" progression, where emotional states are recognized as patterns to be reshaped rather than states to be simulated.</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div class="description"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;em&gt;Tap, drag, or interact to experience how Woebot processes emotional patterns.&lt;/em&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button id="start-button" class="button"&gt;BEGIN INTERACTION&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Loading screen --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="loading" id="loading"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;h2&gt;Loading...&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;p&gt;Preparing visualization&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Sound note that fades away --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="sound-note" id="sound-note"&gt;Sound available with headphones&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Solid background (shown by default) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="solid-background"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- p5.js visualization will be attached to this div --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="visualization-overlay"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Global reference to p5 instance</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>let p5Instance = null;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Tutorial state</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>let tutorialStep = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>let tutorialShown = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const tutorialSteps = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>"Tap and drag to reveal emotional patterns",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>"Double-tap to trigger a therapeutic response",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>"Hold to activate the soothe→solve progression"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Touch tracking for visualization</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>let lastTouchPosition = {x: 0, y: 0, active: false, timer: 0};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Touch indicator element</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const touchIndicator = document.getElementById('touch-indicator');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Start the entire experience</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Set up the landing page button</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('start-button').addEventListener('click', startExperience);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('start-button').addEventListener('touchstart', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>startExperience();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Set up tutorial handler</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tutorial-hint').addEventListener('click', advanceTutorial);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tutorial-hint').addEventListener('touchend', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>advanceTutorial();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Disable default touch behaviors on the document</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.addEventListener('touchmove', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!e.target.closest('button')) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, { passive: false });</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.addEventListener('touchstart', function(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!e.target.closest('button')) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, { passive: false });</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Initialize p5 sketch</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>new p5(woebotSketch, 'visualization-overlay');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function startExperience() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Hide landing page</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('landing-overlay').style.display = 'none';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Show main interface elements</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('loading').style.display = 'flex';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('visualization-overlay').style.display = 'block';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('sound-note').style.display = 'block';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Hide loading screen after a delay</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setTimeout(function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById('loading').style.display = 'none';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, 1500);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Fade out sound note after 5 seconds</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setTimeout(function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById('sound-note').classList.add('fade');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, 5000);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Show tutorial after a short delay</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setTimeout(function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!tutorialShown) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>showTutorial();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, 2000);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function showTutorial() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>tutorialStep = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tutorial-text').textContent = tutorialSteps[tutorialStep];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById('tutorial-overlay').classList.add('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>tutorialShown = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function advanceTutorial() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>tutorialStep++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (tutorialStep &lt; tutorialSteps.length) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById('tutorial-text').textContent = tutorialSteps[tutorialStep];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById('tutorial-overlay').classList.remove('active');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Show touch indicator at the specified position</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>function showTouchIndicator(x, y) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>touchIndicator.style.left = x + 'px';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>touchIndicator.style.top = y + 'px';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>touchIndicator.style.opacity = '1';</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Hide indicator after a short delay</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>touchIndicator.style.opacity = '0';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, 300);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Woebot visualization sketch</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const woebotSketch = function(p) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Store reference to p5 instance</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p5Instance = p;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Emotion patterns data structure</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let patterns = [];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const MAX_PATTERNS = 30;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Therapeutic response system</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let therapeuticResponses = [];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const MAX_RESPONSES = 10;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Central palm - representing Woebot's gesture</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let palm;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Audio elements</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let calmSound;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let therapeuticSound;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let tealAmberSound;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Interaction tracking</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let isTherapeuticMode = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let therapeuticTimer = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let longPressTimer = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let isLongPressing = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let longPressX = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let longPressY = 0;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Color palette based on Woebot's teal→amber gradient</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const colors = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>teal: [32, 178, 170],</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>amber: [230, 180, 34],</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>error: [220, 60, 50],</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>neutral: [180, 180, 180]</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Emotional pattern types</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const patternTypes = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "catastrophizing", color: colors.error, spiral: true, rigidity: 0.8 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "rumination", color: colors.error, spiral: true, rigidity: 0.5 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "mind-reading", color: colors.error, spiral: false, rigidity: 0.7 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "should-statements", color: colors.error, spiral: false, rigidity: 0.9 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "labeling", color: colors.error, spiral: false, rigidity: 0.6 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "hopelessness", color: colors.error, spiral: true, rigidity: 0.7 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "dissociation", color: colors.neutral, spiral: false, rigidity: 0.2 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "neutral", color: colors.neutral, spiral: false, rigidity: 0.4 }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Therapeutic response types</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const responseTypes = [</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "grounding", color: colors.teal, duration: 180 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "reframe", color: colors.teal, duration: 120 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "validation", color: colors.teal, duration: 90 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "activation", color: colors.amber, duration: 150 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "problem-solving", color: colors.amber, duration: 160 },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>{ name: "mindfulness", color: colors.teal, duration: 100 }</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>];</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.preload = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Load sounds</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>try {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.soundFormats('mp3', 'wav');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>calmSound = p.loadSound('https://cdn.freesound.org/previews/539/539684_4948133-lq.mp3');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>therapeuticSound = p.loadSound('https://cdn.freesound.org/previews/543/543786_12525212-lq.mp3');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>tealAmberSound = p.loadSound('https://cdn.freesound.org/previews/612/612085_5674468-lq.mp3');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} catch(e) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>console.error("Error loading sounds:", e);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Create silent replacements</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>calmSound = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>play: function() { console.log("Would play calm sound"); },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>setVolume: function() {}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>therapeuticSound = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>play: function() { console.log("Would play therapeutic sound"); },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>setVolume: function() {}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>tealAmberSound = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>play: function() { console.log("Would play teal-amber sound"); },</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>setVolume: function() {}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.setup = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Create canvas</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>let canvas = p.createCanvas(p.windowWidth, p.windowHeight);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>canvas.parent('visualization-overlay');</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Initialize central palm</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>palm = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>x: p.width / 2,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>y: p.height / 2,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>size: 100,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>rotation: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pulseSize: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pulseDir: 1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>color: colors.teal.concat([255])</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Create initial patterns</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>for (let i = 0; i &lt; 15; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>createPattern(</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(p.width),<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(p.height),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(patternTypes)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Initialize audio context</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.userStartAudio();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function createPattern(x, y, type) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!type) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>type = p.random(patternTypes);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const pattern = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>x: x,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>y: y,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>vx: p.random(-1, 1),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>vy: p.random(-1, 1),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>size: p.random(20, 60),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>type: type,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>opacity: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>fadeSpeed: p.random(0.01, 0.03),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>age: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>lifespan: p.random(300, 600),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>rotation: p.random(p.TWO_PI),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>rotationSpeed: p.random(-0.02, 0.02) * type.rigidity,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>vertices: Math.floor(p.random(3, 7)),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>distortion: type.rigidity * 0.5,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>spiral: type.spiral,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>spiralTightness: p.random(0.1, 0.3),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>spiralRotation: p.random(p.TWO_PI),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>beingProcessed: false,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>processingProgress: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>originalColor: type.color.slice(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>currentColor: type.color.slice(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>targetColor: type.color.slice()</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>patterns.push(pattern);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Remove oldest if we exceed max</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (patterns.length &gt; MAX_PATTERNS) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>patterns.shift();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return pattern;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function createTherapeuticResponse(x, y, targetPattern) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const type = p.random(responseTypes);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const response = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>x: x,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>y: y,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>targetPattern: targetPattern,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>type: type,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>size: 50,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>opacity: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>fadeSpeed: 0.05,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>age: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>lifespan: type.duration,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>color: type.color.concat([0]), // Start with 0 alpha</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>expandWave: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>expandSpeed: 2,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>expandOpacity: 1,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>text: type.name,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pulseAmount: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pulseDir: 1</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticResponses.push(response);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Remove oldest if we exceed max</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (therapeuticResponses.length &gt; MAX_RESPONSES) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>therapeuticResponses.shift();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return response;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function updatePattern(pattern) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Age the pattern</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.age++;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Handle fade in/out</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (pattern.age &lt; 60) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.opacity += pattern.fadeSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (pattern.opacity &gt; 1) pattern.opacity = 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else if (pattern.age &gt; pattern.lifespan - 60) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.opacity -= pattern.fadeSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (pattern.opacity &lt; 0) pattern.opacity = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update rotation</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.rotation += pattern.rotationSpeed;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update position with slight random movement</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!pattern.beingProcessed) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.x += pattern.vx + p.random(-0.5, 0.5) * pattern.type.rigidity;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.y += pattern.vy + p.random(-0.5, 0.5) * pattern.type.rigidity;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Bounce off edges</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (pattern.x &lt; 0 || pattern.x &gt; p.width) pattern.vx *= -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (pattern.y &lt; 0 || pattern.y &gt; p.height) pattern.vy *= -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// If being processed, update color towards target (teal or amber)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>for (let i = 0; i &lt; 3; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>pattern.currentColor[i] = p.lerp(</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>pattern.currentColor[i],<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>pattern.targetColor[i],<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>0.05</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Update processing progress</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.processingProgress += 0.01;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (pattern.processingProgress &gt;= 1) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Finished processing</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>pattern.beingProcessed = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>pattern.lifespan = pattern.age + 60; // Set to fade out soon</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function drawPattern(pattern) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.translate(pattern.x, pattern.y);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.rotate(pattern.rotation);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Set color with opacity</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const patternColor = p.color(</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.currentColor[0],<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.currentColor[1],<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.currentColor[2],<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>255 * pattern.opacity</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.fill(patternColor);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw different shapes based on pattern type</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (pattern.spiral) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Draw spiral pattern (for rumination, catastrophizing)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.noStroke();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.beginShape();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>for (let i = 0; i &lt; 200; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const angle = pattern.spiralRotation + i * 0.1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const radius = i * pattern.spiralTightness;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>if (radius &gt; pattern.size) break;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const x = p.cos(angle) * radius;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const y = p.sin(angle) * radius;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.vertex(x, y);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.endShape();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Draw angular shape (for other pattern types)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.beginShape();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>for (let i = 0; i &lt; pattern.vertices; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const angle = p.map(i, 0, pattern.vertices, 0, p.TWO_PI);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Add distortion based on rigidity</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const distortionAmount = pattern.distortion * p.sin(angle * 3 + p.frameCount * 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const radius = pattern.size * (1 + distortionAmount * 0.2);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const x = p.cos(angle) * radius;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const y = p.sin(angle) * radius;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.vertex(x, y);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.endShape(p.CLOSE);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// If pattern is being processed, show progress</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (pattern.beingProcessed) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Draw processing indicator</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.noFill();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.stroke(255, 255, 255, 100 * pattern.opacity);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.strokeWeight(3);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.arc(0, 0, pattern.size * 1.5, pattern.size * 1.5,<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                         </span>-p.HALF_PI, -p.HALF_PI + p.TWO_PI * pattern.processingProgress);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.pop();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function updateTherapeuticResponse(response) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Age the response</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>response.age++;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Handle fade in/out</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (response.age &lt; 30) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.opacity += response.fadeSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (response.opacity &gt; 1) response.opacity = 1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.color[3] = 255 * response.opacity;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else if (response.age &gt; response.lifespan - 30) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.opacity -= response.fadeSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (response.opacity &lt; 0) response.opacity = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.color[3] = 255 * response.opacity;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update expanding wave</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>response.expandWave += response.expandSpeed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>response.expandOpacity = p.map(response.expandWave, 0, 200, 1, 0, true);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update pulse effect</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>response.pulseAmount += 0.1 * response.pulseDir;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (Math.abs(response.pulseAmount) &gt; 5) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.pulseDir *= -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Move toward target pattern if one exists</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (response.targetPattern &amp;&amp; response.opacity &gt; 0.5) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Move toward target</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.x = p.lerp(response.x, response.targetPattern.x, 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>response.y = p.lerp(response.y, response.targetPattern.y, 0.05);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// If close enough, start processing the pattern</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const dist = p.dist(response.x, response.y, response.targetPattern.x, response.targetPattern.y);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (dist &lt; 30 &amp;&amp; !response.targetPattern.beingProcessed) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>startProcessingPattern(response.targetPattern, response.type.color);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function startProcessingPattern(pattern, therapeuticColor) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Start the transformation process</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.beingProcessed = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.processingProgress = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.targetColor = therapeuticColor;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Slow down and stabilize the pattern</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.vx *= 0.2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.vy *= 0.2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>pattern.rotationSpeed *= 0.3;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function drawTherapeuticResponse(response) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.translate(response.x, response.y);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw expanding circle</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (response.expandWave &lt; 200) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.noFill();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.stroke(response.color[0], response.color[1], response.color[2], 255 * response.expandOpacity);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.strokeWeight(2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.ellipse(0, 0, response.expandWave, response.expandWave);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw main circle with pulsing effect</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.fill(response.color[0], response.color[1], response.color[2], response.color[3]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.noStroke();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.ellipse(0, 0, response.size + response.pulseAmount, response.size + response.pulseAmount);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw text label</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.fill(255, 255, 255, response.color[3]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.textAlign(p.CENTER, p.CENTER);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.textSize(12);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.text(response.type.name, 0, 0);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.pop();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function updatePalm() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update pulse effect</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>palm.pulseSize += 0.2 * palm.pulseDir;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (Math.abs(palm.pulseSize) &gt; 5) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.pulseDir *= -1;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// In therapeutic mode, make pulse more pronounced</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isTherapeuticMode) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.pulseSize = p.sin(p.frameCount * 0.1) * 10;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Transition color toward amber</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[0] = p.lerp(palm.color[0], colors.amber[0], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[1] = p.lerp(palm.color[1], colors.amber[1], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[2] = p.lerp(palm.color[2], colors.amber[2], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>} else {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Transition color back toward teal</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[0] = p.lerp(palm.color[0], colors.teal[0], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[1] = p.lerp(palm.color[1], colors.teal[1], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>palm.color[2] = p.lerp(palm.color[2], colors.teal[2], 0.05);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function drawPalm() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.translate(palm.x, palm.y);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw glow</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.fill(palm.color[0], palm.color[1], palm.color[2], 50);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.noStroke();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.ellipse(0, 0, palm.size * 1.5 + palm.pulseSize, palm.size * 1.5 + palm.pulseSize);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw palm outline</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.noFill();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.stroke(palm.color[0], palm.color[1], palm.color[2], 200);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.strokeWeight(3);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.ellipse(0, 0, palm.size + palm.pulseSize, palm.size + palm.pulseSize);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw palm lines (symbolizing an open palm)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.stroke(palm.color[0], palm.color[1], palm.color[2], 150);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.strokeWeight(2);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Life line (curved)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.beginShape();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.noFill();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.curveVertex(-30, -20);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.curveVertex(-20, 0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.curveVertex(-10, 20);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.curveVertex(0, 30);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.endShape();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Heart line (straight)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.line(-30, -10, 30, -10);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Head line (medium)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.line(-20, 10, 20, 10);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Fate line (vertical)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.line(0, -30, 0, 30);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.pop();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// In therapeutic mode, draw soothe→solve gradient rays</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isTherapeuticMode) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.translate(palm.x, palm.y);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Draw gradient rays</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>for (let i = 0; i &lt; 12; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const angle = i * (p.TWO_PI / 12) + p.frameCount * 0.01;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const rayLength = 150 + p.sin(p.frameCount * 0.05 + i) * 20;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.rotate(angle);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Create gradient from teal to amber</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>for (let j = 0; j &lt; rayLength; j += 3) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>const t = j / rayLength;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>const rayColor = p.lerpColor(</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>p.color(colors.teal[0], colors.teal[1], colors.teal[2], 100 * (1 - t)),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>p.color(colors.amber[0], colors.amber[1], colors.amber[2], 100 * (1 - t)),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>t</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>p.stroke(rayColor);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>p.strokeWeight(2 * (1 - t));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>p.point(j, 0);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.pop();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.pop();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function triggerTherapeuticMode() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isTherapeuticMode = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticTimer = 0;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Play sound</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticSound.setVolume(0.3);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticSound.play();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function endTherapeuticMode() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isTherapeuticMode = false;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Play sound transition</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>tealAmberSound.setVolume(0.2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>tealAmberSound.play();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function processNearbyPatterns(x, y, radius) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>let processed = false;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Find patterns within radius</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>for (let i = 0; i &lt; patterns.length; i++) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const dist = p.dist(x, y, patterns[i].x, patterns[i].y);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (dist &lt; radius &amp;&amp; !patterns[i].beingProcessed) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Create therapeutic response</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>createTherapeuticResponse(x, y, patterns[i]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>processed = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return processed;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>function drawLongPressIndicator() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isLongPressing) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.push();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.noFill();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.stroke(colors.teal[0], colors.teal[1], colors.teal[2], 150);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.strokeWeight(2);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Draw progress circle</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const progress = p.map(longPressTimer, 0, 30, 0, p.TWO_PI);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.arc(longPressX, longPressY, 60, 60, -p.HALF_PI, -p.HALF_PI + progress);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.pop();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.draw = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Clear canvas</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.clear();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update therapeutic mode timer</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isTherapeuticMode) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>therapeuticTimer++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (therapeuticTimer &gt; 180) { // 3 seconds</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>endTherapeuticMode();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update and draw patterns</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>for (let i = patterns.length - 1; i &gt;= 0; i--) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>updatePattern(patterns[i]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>drawPattern(patterns[i]);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Remove expired patterns</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (patterns[i].opacity &lt;= 0 &amp;&amp; patterns[i].age &gt; 60) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>patterns.splice(i, 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update and draw therapeutic responses</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>for (let i = therapeuticResponses.length - 1; i &gt;= 0; i--) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>updateTherapeuticResponse(therapeuticResponses[i]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>drawTherapeuticResponse(therapeuticResponses[i]);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Remove expired responses</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (therapeuticResponses[i].age &gt; therapeuticResponses[i].lifespan) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>therapeuticResponses.splice(i, 1);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update and draw palm</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>updatePalm();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>drawPalm();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Draw long press indicator</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>drawLongPressIndicator();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Occasionally create new patterns</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (p.frameCount % 90 === 0 &amp;&amp; patterns.length &lt; MAX_PATTERNS) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>createPattern(</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(p.width),<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(p.height),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>p.random(patternTypes)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Update long press timer</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isLongPressing) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>longPressTimer++;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (longPressTimer &gt;= 30) { // Half a second</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Trigger soothe→solve progression</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>triggerTherapeuticMode();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Process all patterns within a large radius</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>processNearbyPatterns(longPressX, longPressY, 200);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Reset long press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>isLongPressing = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>longPressTimer = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.windowResized = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.resizeCanvas(p.windowWidth, p.windowHeight);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Center palm</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>palm.x = p.width / 2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>palm.y = p.height / 2;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.mousePressed = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Start long press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isLongPressing = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>longPressTimer = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>longPressX = p.mouseX;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>longPressY = p.mouseY;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Ensure audio is initialized</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>p.userStartAudio();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.mouseReleased = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// If it was a short press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isLongPressing &amp;&amp; longPressTimer &lt; 30) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Create a new pattern at mouse position</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>createPattern(p.mouseX, p.mouseY);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Play calm sound</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>calmSound.setVolume(0.2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>calmSound.play();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Reset long press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isLongPressing = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>longPressTimer = 0;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.mouseDragged = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Reset long press when dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isLongPressing = false;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Create small pattern while dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (p.frameCount % 10 === 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const pattern = createPattern(p.mouseX, p.mouseY);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>pattern.size *= 0.7; // Smaller pattern when dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.doubleClicked = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Create therapeutic response</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>processNearbyPatterns(p.mouseX, p.mouseY, 100);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Play therapeutic sound</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticSound.setVolume(0.2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>therapeuticSound.play();</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>// Touch event handlers</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.touchStarted = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (p.touches.length &gt; 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const touchX = p.touches[0].x;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const touchY = p.touches[0].y;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Start long press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>isLongPressing = true;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>longPressTimer = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>longPressX = touchX;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>longPressY = touchY;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Show touch indicator</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>showTouchIndicator(touchX, touchY);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Ensure audio is initialized</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>p.userStartAudio();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.touchEnded = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// If it was a short press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (isLongPressing &amp;&amp; longPressTimer &lt; 30) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (p.touches.length &gt; 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const touchX = p.touches[0].x;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const touchY = p.touches[0].y;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Create a new pattern at touch position</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>createPattern(touchX, touchY);</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                        </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>// Play calm sound</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>calmSound.setVolume(0.2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>calmSound.play();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Reset long press</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isLongPressing = false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>longPressTimer = 0;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>p.touchMoved = function() {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// Reset long press when dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>isLongPressing = false;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (p.touches.length &gt; 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const touchX = p.touches[0].x;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>const touchY = p.touches[0].y;</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Create small pattern while dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>if (p.frameCount % 10 === 0) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>const pattern = createPattern(touchX, touchY);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>pattern.size *= 0.7; // Smaller pattern when dragging</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                    </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>// Show touch indicator</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>showTouchIndicator(touchX, touchY);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p2"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return false;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
