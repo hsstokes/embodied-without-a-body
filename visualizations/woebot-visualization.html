@@ -504,23 +504,26 @@
                 // Load sounds
                 try {
                     p.soundFormats('mp3', 'wav');
-                    calmSound = p.loadSound('https://cdn.freesound.org/previews/539/539684_4948133-lq.mp3');
-                    therapeuticSound = p.loadSound('https://cdn.freesound.org/previews/543/543786_12525212-lq.mp3');
-                    tealAmberSound = p.loadSound('https://cdn.freesound.org/previews/612/612085_5674468-lq.mp3');
+                    calmSound = p.loadSound('woebot-calm.mp3');
+                    therapeuticSound = p.loadSound('woebot-therapeutic.mp3');
+                    tealAmberSound = p.loadSound('woebot-teal-amber.mp3');
                 } catch(e) {
                     console.error("Error loading sounds:", e);
                     // Create silent replacements
                     calmSound = {
                         play: function() { console.log("Would play calm sound"); },
                         setVolume: function() {}
+                        stop: function() {}  // Added this method
                     };
                     therapeuticSound = {
                         play: function() { console.log("Would play therapeutic sound"); },
                         setVolume: function() {}
+                        stop: function() {}  // Added this method
                     };
                     tealAmberSound = {
                         play: function() { console.log("Would play teal-amber sound"); },
                         setVolume: function() {}
+                        stop: function() {}  // Added this method
                     };
                 }
             };
