@@ -458,12 +458,16 @@
             let palm;
             
             // Hand gesture animation
-            let handGestureFrames = [];
-            let currentFrame = 0;
-            let frameTimer = 0;
-            const FRAME_DURATION = 8; // How many draw cycles each frame displays
-            let therapeuticFrames = []; // Separate frames for therapeutic mode
-            let currentTherapeuticFrame = 0;
+            const handAnimation = {
+                frameCount: 6,
+                currentFrame: 0,
+                isPlaying: true, // Always showing the palm
+                frameDuration: 8, // How many draw cycles each frame displays
+                opacity: 1,
+                size: 200,
+                frameImages: [],
+                isLoaded: false
+            };
             
             // Audio elements
             let calmSound;
@@ -516,14 +520,36 @@
                     therapeuticSound = p.loadSound('woebot-therapeutic.mp3');
                     tealAmberSound = p.loadSound('woebot-teal-amber.mp3');
                     
-                    // Load hand gesture animation frames
-                    for (let i = 1; i <= 6; i++) {
-                        handGestureFrames.push(p.loadImage('hand-gesture-' + i + '.png'));
-                    }
-                    
-                    // Load therapeutic hand gesture frames
-                    for (let i = 1; i <= 6; i++) {
-                        therapeuticFrames.push(p.loadImage('therapeutic-hand-' + i + '.png'));
+                    // Load hand animation frames
+                    handAnimation.frameImages = [];
+                    for (let i = 1; i <= handAnimation.frameCount; i++) {
+                        console.log(`Loading hand${i}.png`);
+                        const img = p.loadImage(
+                            `hand${i}.png`,
+                            function() {
+                                console.log(`Successfully loaded hand${i}.png`);
+                                handAnimation.isLoaded = true;
+                            },
+                            function(err) {
+                                console.error(`Failed to load hand${i}.png:`, err);
+                                // Create a placeholder for debugging
+                                const placeholder = p.createGraphics(200, 200);
+                                placeholder.background(0, 0, 0, 0); // Transparent background
+                                placeholder.stroke(colors.teal[0], colors.teal[1], colors.teal[2]);
+                                placeholder.strokeWeight(2);
+                                placeholder.noFill();
+                                
+                                // Draw a simple hand
+                                placeholder.ellipse(100, 100, 80, 60); // Palm
+                                for (let f = 0; f < 5; f++) {
+                                    const angle = p.map(f, 0, 4, -p.PI/3, p.PI/3);
+                                    placeholder.line(100, 100, 100 + p.cos(angle) * 70, 100 + p.sin(angle) * 70 - 30);
+                                }
+                                
+                                handAnimation.frameImages[i-1] = placeholder;
+                            }
+                        );
+                        handAnimation.frameImages.push(img);
                     }
                 } catch(e) {
                     console.error("Error loading assets:", e);
@@ -543,10 +569,6 @@
                         setVolume: function() {},
                         stop: function() {}
                     };
-                    
-                    // Create empty objects for images if they fail to load
-                    handGestureFrames = Array(6).fill(null);
-                    therapeuticFrames = Array(6).fill(null);
                 }
             };
             
@@ -578,6 +600,65 @@
                 // Initialize audio context
                 p.userStartAudio();
             };
+            
+            // Update hand animation
+            function updateHandAnimation() {
+                // Update animation frame
+                if (p.frameCount % handAnimation.frameDuration === 0) {
+                    handAnimation.currentFrame = (handAnimation.currentFrame + 1) % handAnimation.frameCount;
+                }
+                
+                // Keep animation centered in the palm
+                handAnimation.x = palm.x;
+                handAnimation.y = palm.y;
+                
+                // Make the hand animation respond to therapeutic mode
+                if (isTherapeuticMode) {
+                    handAnimation.size = palm.size * 1.2 + palm.pulseSize;
+                } else {
+                    handAnimation.size = palm.size * 1.1;
+                }
+            }
+            
+            // Draw the current animation frame
+            function drawHandAnimationFrame() {
+                const anim = handAnimation;
+                
+                if (anim.frameImages[anim.currentFrame]) {
+                    // Save current drawing settings
+                    p.push();
+                    
+                    // Set transparency based on palm color
+                    const currentColor = isTherapeuticMode ? 
+                        p.lerpColor(
+                            p.color(colors.teal[0], colors.teal[1], colors.teal[2]),
+                            p.color(colors.amber[0], colors.amber[1], colors.amber[2]),
+                            0.5
+                        ) :
+                        p.color(palm.color[0], palm.color[1], palm.color[2]);
+                        
+                    p.tint(currentColor);
+                    
+                    // Get the current frame image
+                    const img = anim.frameImages[anim.currentFrame];
+                    
+                    // Calculate height while preserving aspect ratio
+                    const aspectRatio = img.height / img.width;
+                    const drawHeight = anim.size * aspectRatio;
+                    
+                    // Draw the current frame centered at x,y
+                    p.image(
+                        img,
+                        anim.x - anim.size/2,
+                        anim.y - drawHeight/2,
+                        anim.size,
+                        drawHeight
+                    );
+                    
+                    // Restore drawing settings
+                    p.pop();
+                }
+            }
             
             function createPattern(x, y, type) {
                 if (!type) {
@@ -853,25 +934,11 @@
                     palm.color[0] = p.lerp(palm.color[0], colors.amber[0], 0.05);
                     palm.color[1] = p.lerp(palm.color[1], colors.amber[1], 0.05);
                     palm.color[2] = p.lerp(palm.color[2], colors.amber[2], 0.05);
-                    
-                    // Update therapeutic animation
-                    frameTimer++;
-                    if (frameTimer >= FRAME_DURATION) {
-                        currentTherapeuticFrame = (currentTherapeuticFrame + 1) % therapeuticFrames.length;
-                        frameTimer = 0;
-                    }
                 } else {
                     // Transition color back toward teal
                     palm.color[0] = p.lerp(palm.color[0], colors.teal[0], 0.05);
                     palm.color[1] = p.lerp(palm.color[1], colors.teal[1], 0.05);
                     palm.color[2] = p.lerp(palm.color[2], colors.teal[2], 0.05);
-                    
-                    // Update regular animation
-                    frameTimer++;
-                    if (frameTimer >= FRAME_DURATION) {
-                        currentFrame = (currentFrame + 1) % handGestureFrames.length;
-                        frameTimer = 0;
-                    }
                 }
             }
             
@@ -890,40 +957,36 @@
                 p.strokeWeight(3);
                 p.ellipse(0, 0, palm.size + palm.pulseSize, palm.size + palm.pulseSize);
                 
-                // Draw the appropriate hand gesture based on mode
-                const frames = isTherapeuticMode ? therapeuticFrames : handGestureFrames;
-                const currentAnimFrame = isTherapeuticMode ? currentTherapeuticFrame : currentFrame;
+                p.pop();
                 
-                if (frames.length > 0 && frames[currentAnimFrame]) {
-                    // Draw the current animation frame
-                    const img = frames[currentAnimFrame];
-                    const imgSize = palm.size * 1.2; // Scale image to fit within palm
-                    p.image(img, -imgSize/2, -imgSize/2, imgSize, imgSize);
+                // Draw the hand animation frame
+                if (handAnimation.isLoaded) {
+                    drawHandAnimationFrame();
                 } else {
-                    // Fallback: Draw the original palm lines if images aren't available
+                    // Fallback: Draw a simple open palm if images aren't available
+                    p.push();
+                    p.translate(palm.x, palm.y);
+                    
                     p.stroke(palm.color[0], palm.color[1], palm.color[2], 150);
                     p.strokeWeight(2);
                     
-                    // Life line (curved)
-                    p.beginShape();
+                    // Draw an open hand with five fingers
+                    // Palm center
+                    p.ellipse(0, 0, 30, 20);
+                    
+                    // Fingers (radiating lines)
+                    for (let i = 0; i < 5; i++) {
+                        let angle = p.map(i, 0, 4, -p.PI/3, p.PI/3);
+                        let length = 35;
+                        p.line(0, 0, p.cos(angle) * length, p.sin(angle) * length - 15);
+                    }
+                    
+                    // Palm line
                     p.noFill();
-                    p.curveVertex(-30, -20);
-                    p.curveVertex(-20, 0);
-                    p.curveVertex(-10, 20);
-                    p.curveVertex(0, 30);
-                    p.endShape();
+                    p.arc(0, 5, 25, 15, p.PI, p.TWO_PI);
                     
-                    // Heart line (straight)
-                    p.line(-30, -10, 30, -10);
-                    
-                    // Head line (medium)
-                    p.line(-20, 10, 20, 10);
-                    
-                    // Fate line (vertical)
-                    p.line(0, -30, 0, 30);
+                    p.pop();
                 }
-                
-                p.pop();
                 
                 // In therapeutic mode, draw soothe→solve gradient rays
                 if (isTherapeuticMode) {
@@ -1041,6 +1104,9 @@
                         therapeuticResponses.splice(i, 1);
                     }
                 }
+                
+                // Update hand animation
+                updateHandAnimation();
                 
                 // Update and draw palm
                 updatePalm();
