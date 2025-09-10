@@ -1,0 +1,1735 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+    <title>Claude - Reflective Processing</title>\
+    <meta charset="UTF-8">\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">\
+    <meta name="apple-mobile-web-app-capable" content="yes">\
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>\
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js"></script>\
+    <style>\
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap');\
+        \
+        body \{\
+            margin: 0;\
+            padding: 0;\
+            overflow: hidden;\
+            background-color: #f5f5f7;\
+            font-family: 'Roboto Mono', monospace;\
+            -webkit-text-size-adjust: 100%;\
+            touch-action: none;\
+        \}\
+        \
+        /* Landing page overlay */\
+        #landing-overlay \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-color: rgba(245, 245, 247, 0.95);\
+            display: flex;\
+            flex-direction: column;\
+            justify-content: center;\
+            align-items: center;\
+            z-index: 9999;\
+            box-sizing: border-box;\
+            padding: 20px;\
+        \}\
+        \
+        .grid-background \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-image: linear-gradient(#8B5CF6 1px, transparent 1px),\
+                              linear-gradient(90deg, #8B5CF6 1px, transparent 1px),\
+                              linear-gradient(rgba(79, 70, 229, 0.3) 1px, transparent 1px),\
+                              linear-gradient(90deg, rgba(79, 70, 229, 0.3) 1px, transparent 1px);\
+            background-size: 20px 20px,\
+                             20px 20px,\
+                             5px 5px,\
+                             5px 5px;\
+            z-index: -1;\
+        \}\
+        \
+        .content \{\
+            max-width: 500px;\
+            padding: 25px;\
+            background-color: rgba(255, 255, 255, 0.85);\
+            border-radius: 12px;\
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);\
+            text-align: center;\
+        \}\
+        \
+        .title \{\
+            font-size: 18px;\
+            margin: 0 0 15px 0;\
+            color: #333;\
+            letter-spacing: 1px;\
+        \}\
+        \
+        .description \{\
+            font-size: 13px;\
+            line-height: 1.4;\
+            margin-bottom: 20px;\
+            color: #555;\
+        \}\
+        \
+        .button \{\
+            padding: 12px 24px;\
+            font-size: 16px;\
+            background: linear-gradient(135deg, #8B5CF6, #4F46E5);\
+            color: white;\
+            border: none;\
+            border-radius: 20px;\
+            cursor: pointer;\
+            font-family: 'Roboto Mono', monospace;\
+            transition: all 0.3s ease;\
+            letter-spacing: 0.5px;\
+            -webkit-tap-highlight-color: rgba(0,0,0,0);\
+            touch-action: manipulation;\
+            margin: 15px 0 5px 0;\
+            display: inline-block;\
+            text-decoration: none;\
+        \}\
+        \
+        .button:hover \{\
+            transform: translateY(-2px);\
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);\
+        \}\
+        \
+        .button:active \{\
+            transform: scale(0.98);\
+        \}\
+        \
+        .gesture-container \{\
+            margin-bottom: 15px;\
+            display: flex;\
+            justify-content: center;\
+        \}\
+        \
+        .gesture-outline \{\
+            width: 80px;\
+            height: 80px;\
+            border: 2px solid #8B5CF6;\
+            border-radius: 50%;\
+            display: flex;\
+            justify-content: center;\
+            align-items: center;\
+            opacity: 0.8;\
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(79, 70, 229, 0.2));\
+        \}\
+        \
+        /* Claude's gesture: infinity/connection symbol */\
+        .gesture-icon \{\
+            width: 50px;\
+            height: 50px;\
+            position: relative;\
+        \}\
+        \
+        .gesture-icon::before \{\
+            content: "\uc0\u8734 ";\
+            position: absolute;\
+            font-size: 32px;\
+            color: #8B5CF6;\
+            top: 5px;\
+            left: 15px;\
+            transform: rotate(90deg);\
+        \}\
+        \
+        /* Solid background element */\
+        #solid-background \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-color: rgb(245, 248, 250);\
+            z-index: 1;\
+            display: block; /* Shown by default */\
+        \}\
+        \
+        #visualization-overlay \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            z-index: 2;\
+            pointer-events: auto;\
+            display: none; /* Hidden until landing page dismissed */\
+        \}\
+        \
+        .loading \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-color: #000;\
+            color: white;\
+            display: flex;\
+            justify-content: center;\
+            align-items: center;\
+            z-index: 999;\
+            font-family: 'Roboto Mono', monospace;\
+            display: none; /* Hidden until landing page dismissed */\
+        \}\
+        \
+        .sound-note \{\
+            position: fixed;\
+            top: 20px;\
+            left: 20px;\
+            color: white;\
+            background: linear-gradient(135deg, #8B5CF6, #4F46E5);\
+            padding: 10px 20px;\
+            border-radius: 30px;\
+            font-family: 'Roboto Mono', monospace;\
+            font-size: 12px;\
+            z-index: 4;\
+            opacity: 1;\
+            transition: opacity 2s ease-in-out;\
+            display: none; /* Hidden until landing page dismissed */\
+        \}\
+        \
+        .sound-note.fade \{\
+            opacity: 0;\
+        \}\
+        \
+        /* Tutorial overlay */\
+        .tutorial-overlay \{\
+            position: fixed;\
+            top: 0;\
+            left: 0;\
+            width: 100%;\
+            height: 100%;\
+            background-color: rgba(0, 0, 0, 0);\
+            display: flex;\
+            justify-content: center;\
+            align-items: flex-end;\
+            z-index: 9000;\
+            opacity: 0;\
+            pointer-events: none;\
+            transition: opacity 0.5s ease;\
+            padding-bottom: 80px;\
+        \}\
+        \
+        .tutorial-overlay.active \{\
+            opacity: 1;\
+            pointer-events: auto;\
+        \}\
+\
+        .tutorial-hint \{\
+            background: linear-gradient(135deg, #8B5CF6, #4F46E5);\
+            padding: 12px 20px;\
+            border-radius: 30px;\
+            max-width: 85%;\
+            text-align: center;\
+            margin-bottom: 0;\
+            color: white;\
+            display: flex;\
+            align-items: center;\
+            justify-content: center;\
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\
+            cursor: pointer;\
+            animation: pulse 2s infinite;\
+         \}\
+\
+         @keyframes pulse \{\
+            0% \{ transform: scale(1); \}\
+            50% \{ transform: scale(1.05); \}\
+            100% \{ transform: scale(1); \}\
+         \}\
+\
+         .tutorial-hint p \{\
+            margin: 0;\
+            font-family: 'Roboto Mono', monospace;\
+            font-size: 14px;\
+         \}\
+        \
+        /* Touch indicator */\
+        .touch-indicator \{\
+            position: fixed;\
+            width: 40px;\
+            height: 40px;\
+            border-radius: 50%;\
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(79, 70, 229, 0.6));\
+            pointer-events: none;\
+            z-index: 10;\
+            transform: translate(-50%, -50%);\
+            opacity: 0;\
+            transition: opacity 0.3s ease;\
+        \}\
+        \
+        /* Thought bubble styles */\
+        .thought-bubble \{\
+            position: absolute;\
+            background-color: rgba(255, 255, 255, 0.9);\
+            border-radius: 12px;\
+            padding: 8px 12px;\
+            font-size: 12px;\
+            max-width: 180px;\
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\
+            opacity: 0;\
+            transition: opacity 0.3s ease;\
+            pointer-events: none;\
+            text-align: center;\
+            transform: translate(-50%, -50%);\
+        \}\
+        \
+        .thought-bubble::before \{\
+            content: "";\
+            position: absolute;\
+            bottom: -8px;\
+            left: 50%;\
+            transform: translateX(-50%);\
+            width: 0;\
+            height: 0;\
+            border-left: 8px solid transparent;\
+            border-right: 8px solid transparent;\
+            border-top: 8px solid rgba(255, 255, 255, 0.9);\
+        \}\
+        \
+        .thought-bubble.input \{\
+            border: 1px solid rgba(139, 92, 246, 0.5);\
+        \}\
+        \
+        .thought-bubble.processing \{\
+            border: 1px solid rgba(79, 70, 229, 0.5);\
+        \}\
+        \
+        .thought-bubble.output \{\
+            border: 1px solid rgba(45, 212, 191, 0.5);\
+        \}\
+    </style>\
+</head>\
+<body>\
+    <!-- Touch indicator element -->\
+    <div id="touch-indicator" class="touch-indicator"></div>\
+    \
+    <!-- Tutorial overlay -->\
+    <div id="tutorial-overlay" class="tutorial-overlay">\
+        <div id="tutorial-hint" class="tutorial-hint">\
+            <p id="tutorial-text">Tap and drag to reveal Claude's thought processes</p>\
+        </div>\
+    </div>\
+    \
+    <!-- Landing page -->\
+    <div id="landing-overlay">\
+        <div class="grid-background"></div>\
+        \
+        <div class="content">\
+            <div class="gesture-container">\
+                <div class="gesture-outline">\
+                    <div class="gesture-icon"></div>\
+                </div>\
+            </div>\
+            \
+            <div class="title">Claude: Reflective Processing</div>\
+            \
+            <div class="description">\
+                Experience how Claude transforms inputs into responses through reflective processing, balancing creativity with knowledge to provide thoughtful assistance.\
+            </div>\
+            \
+            <div class="description">\
+                This visualization reveals Claude's approach to thinking\'97connecting concepts, evaluating information, and finding meaningful patterns to craft considered responses.\
+            </div>\
+            \
+            <div class="description">\
+                <em>Tap, drag, or interact to experience how Claude processes information patterns.</em>\
+            </div>\
+            \
+            <button id="start-button" class="button">BEGIN INTERACTION</button>\
+        </div>\
+    </div>\
+    \
+    <!-- Loading screen -->\
+    <div class="loading" id="loading">\
+        <div>\
+            <h2>Loading...</h2>\
+            <p>Preparing visualization</p>\
+        </div>\
+    </div>\
+    \
+    <!-- Sound note that fades away -->\
+    <div class="sound-note" id="sound-note">Sound available with headphones</div>\
+    \
+    <!-- Solid background (shown by default) -->\
+    <div id="solid-background"></div>\
+    \
+    <!-- p5.js visualization will be attached to this div -->\
+    <div id="visualization-overlay"></div>\
+    \
+    <script>\
+        // Global reference to p5 instance\
+        let p5Instance = null;\
+        \
+        // Tutorial state\
+        let tutorialStep = 0;\
+        let tutorialShown = false;\
+        const tutorialSteps = [\
+            "Tap and drag to reveal Claude's thought processes",\
+            "Double-tap to trigger abstract connections",\
+            "Hold to activate reflective synthesis"\
+        ];\
+        \
+        // Touch tracking for visualization\
+        let lastTouchPosition = \{x: 0, y: 0, active: false, timer: 0\};\
+        \
+        // Touch indicator element\
+        const touchIndicator = document.getElementById('touch-indicator');\
+        \
+        // Arrays to store thoughts\
+        let thoughts = [];\
+        let connections = [];\
+        \
+        // Reflective thought terms\
+        const thoughtTerms = \{\
+            input: [\
+                "Analyzing context",\
+                "Identifying intent",\
+                "Recognizing patterns",\
+                "Exploring relevance",\
+                "Gathering information",\
+                "Considering perspective",\
+                "Mapping concepts",\
+                "Understanding query"\
+            ],\
+            processing: [\
+                "Evaluating options",\
+                "Balancing factors",\
+                "Connecting concepts",\
+                "Weighing evidence",\
+                "Testing implications",\
+                "Synthesizing ideas",\
+                "Resolving tensions",\
+                "Integrating knowledge"\
+            ],\
+            output: [\
+                "Refining clarity",\
+                "Ensuring accuracy",\
+                "Balancing detail",\
+                "Structuring response",\
+                "Adapting tone",\
+                "Ensuring helpfulness",\
+                "Checking completeness",\
+                "Finalizing perspective"\
+            ]\
+        \};\
+        \
+        // Start the entire experience\
+        document.addEventListener('DOMContentLoaded', function() \{\
+            // Set up the landing page button\
+            document.getElementById('start-button').addEventListener('click', startExperience);\
+            document.getElementById('start-button').addEventListener('touchstart', function(e) \{\
+                e.preventDefault();\
+                startExperience();\
+            \});\
+            \
+            // Set up tutorial handler\
+            document.getElementById('tutorial-hint').addEventListener('click', advanceTutorial);\
+            document.getElementById('tutorial-hint').addEventListener('touchend', function(e) \{\
+                e.preventDefault();\
+                advanceTutorial();\
+            \});\
+            \
+            // Disable default touch behaviors on the document\
+            document.addEventListener('touchmove', function(e) \{\
+                if (!e.target.closest('button')) \{\
+                    e.preventDefault();\
+                \}\
+            \}, \{ passive: false \});\
+            \
+            document.addEventListener('touchstart', function(e) \{\
+                if (!e.target.closest('button')) \{\
+                    e.preventDefault();\
+                \}\
+            \}, \{ passive: false \});\
+            \
+            // Initialize p5 sketch\
+            new p5(claudeSketch, 'visualization-overlay');\
+        \});\
+        \
+        function startExperience() \{\
+            // Hide landing page\
+            document.getElementById('landing-overlay').style.display = 'none';\
+            \
+            // Show main interface elements\
+            document.getElementById('loading').style.display = 'flex';\
+            document.getElementById('visualization-overlay').style.display = 'block';\
+            document.getElementById('sound-note').style.display = 'block';\
+            \
+            // Hide loading screen after a delay\
+            setTimeout(function() \{\
+                document.getElementById('loading').style.display = 'none';\
+            \}, 1500);\
+            \
+            // Fade out sound note after 5 seconds\
+            setTimeout(function() \{\
+                document.getElementById('sound-note').classList.add('fade');\
+            \}, 5000);\
+            \
+            // Show tutorial after a short delay\
+            setTimeout(function() \{\
+                if (!tutorialShown) \{\
+                    showTutorial();\
+                \}\
+            \}, 2000);\
+        \}\
+        \
+        function showTutorial() \{\
+            tutorialStep = 0;\
+            document.getElementById('tutorial-text').textContent = tutorialSteps[tutorialStep];\
+            document.getElementById('tutorial-overlay').classList.add('active');\
+            tutorialShown = true;\
+        \}\
+        \
+        function advanceTutorial() \{\
+            tutorialStep++;\
+            if (tutorialStep < tutorialSteps.length) \{\
+                document.getElementById('tutorial-text').textContent = tutorialSteps[tutorialStep];\
+            \} else \{\
+                document.getElementById('tutorial-overlay').classList.remove('active');\
+            \}\
+        \}\
+        \
+        // Show touch indicator at the specified position\
+        function showTouchIndicator(x, y) \{\
+            touchIndicator.style.left = x + 'px';\
+            touchIndicator.style.top = y + 'px';\
+            touchIndicator.style.opacity = '1';\
+            \
+            // Hide indicator after a short delay\
+            setTimeout(() => \{\
+                touchIndicator.style.opacity = '0';\
+            \}, 300);\
+        \}\
+        \
+        // Create a thought bubble\
+        function createThoughtBubble(x, y, text, type) \{\
+            const bubble = document.createElement('div');\
+            bubble.className = `thought-bubble $\{type\}`;\
+            bubble.textContent = text;\
+            bubble.style.left = x + 'px';\
+            bubble.style.top = y + 'px';\
+            document.body.appendChild(bubble);\
+            \
+            // Fade in\
+            setTimeout(() => \{\
+                bubble.style.opacity = '1';\
+            \}, 10);\
+            \
+            // Fade out and remove after a delay\
+            setTimeout(() => \{\
+                bubble.style.opacity = '0';\
+                setTimeout(() => \{\
+                    if (bubble.parentNode) \{\
+                        bubble.parentNode.removeChild(bubble);\
+                    \}\
+                \}, 500);\
+            \}, 3000);\
+        \}\
+        \
+        // Claude visualization sketch\
+        const claudeSketch = function(p) \{\
+            // Store reference to p5 instance\
+            p5Instance = p;\
+            \
+            // Central network - representing Claude's mind\
+            let claudeCore;\
+            \
+            // Thought patterns\
+            let thoughtPatterns = [];\
+            const MAX_PATTERNS = 40;\
+            \
+            // Connection network\
+            let connections = [];\
+            const MAX_CONNECTIONS = 60;\
+            \
+            // Synthesis mode\
+            let isSynthesisMode = false;\
+            let synthesisTimer = 0;\
+            const SYNTHESIS_DURATION = 180; // frames\
+            \
+            // Interaction tracking\
+            let isLongPressing = false;\
+            let longPressTimer = 0;\
+            let longPressX = 0;\
+            let longPressY = 0;\
+            \
+            // Audio elements\
+            let thoughtSound;\
+            let connectionSound;\
+            let synthesisSound;\
+            let ambientSound;\
+            \
+            // Color palette based on Claude's brand\
+            const colors = \{\
+                purple: [139, 92, 246],\
+                indigo: [79, 70, 229],\
+                teal: [45, 212, 191],\
+                neutral: [180, 180, 180]\
+            \};\
+            \
+            // Thought pattern types\
+            const patternTypes = [\
+                \{ \
+                    name: "concept", \
+                    color: colors.purple, \
+                    shape: "circular", \
+                    complexity: 0.6,\
+                    text: thoughtTerms.input\
+                \},\
+                \{ \
+                    name: "connection", \
+                    color: colors.indigo, \
+                    shape: "network", \
+                    complexity: 0.7,\
+                    text: thoughtTerms.processing\
+                \},\
+                \{ \
+                    name: "output", \
+                    color: colors.teal, \
+                    shape: "crystalline", \
+                    complexity: 0.8,\
+                    text: thoughtTerms.output\
+                \}\
+            ];\
+            \
+            p.preload = function() \{\
+                // Load sounds\
+                try \{\
+                    p.soundFormats('mp3', 'wav');\
+                    thoughtSound = p.loadSound('claude-thought.mp3');\
+                    connectionSound = p.loadSound('claude-connection.mp3');\
+                    synthesisSound = p.loadSound('claude-synthesis.mp3');\
+                    ambientSound = p.loadSound('claude-ambient.mp3');\
+                \} catch(e) \{\
+                    console.error("Error loading assets:", e);\
+                    // Create silent replacements for sounds\
+                    thoughtSound = \{\
+                        play: function() \{ console.log("Would play thought sound"); \},\
+                        setVolume: function() \{\},\
+                        stop: function() \{\}\
+                    \};\
+                    connectionSound = \{\
+                        play: function() \{ console.log("Would play connection sound"); \},\
+                        setVolume: function() \{\},\
+                        stop: function() \{\}\
+                    \};\
+                    synthesisSound = \{\
+                        play: function() \{ console.log("Would play synthesis sound"); \},\
+                        setVolume: function() \{\},\
+                        stop: function() \{\}\
+                    \};\
+                    ambientSound = \{\
+                        play: function() \{ console.log("Would play ambient sound"); \},\
+                        setVolume: function() \{\},\
+                        stop: function() \{\},\
+                        loop: function() \{\}\
+                    \};\
+                \}\
+            \};\
+            \
+            p.setup = function() \{\
+                // Create canvas\
+                let canvas = p.createCanvas(p.windowWidth, p.windowHeight);\
+                canvas.parent('visualization-overlay');\
+                \
+                // Initialize central core\
+                claudeCore = \{\
+                    x: p.width / 2,\
+                    y: p.height / 2,\
+                    size: 120,\
+                    rotation: 0,\
+                    pulseSize: 0,\
+                    pulseDir: 1,\
+                    energy: 0,\
+                    nodes: []\
+                \};\
+                \
+                // Create central core nodes\
+                for (let i = 0; i < 8; i++) \{\
+                    const angle = i * (p.TWO_PI / 8);\
+                    const distance = claudeCore.size * 0.7;\
+                    claudeCore.nodes.push(\{\
+                        x: p.cos(angle) * distance,\
+                        y: p.sin(angle) * distance,\
+                        size: p.random(5, 10),\
+                        angle: angle,\
+                        speed: p.random(0.001, 0.003),\
+                        phase: p.random(p.TWO_PI)\
+                    \});\
+                \}\
+                \
+                // Create initial thought patterns\
+                for (let i = 0; i < 15; i++) \{\
+                    createThoughtPattern(\
+                        p.random(p.width), \
+                        p.random(p.height),\
+                        p.random(patternTypes)\
+                    );\
+                \}\
+                \
+                // Initialize audio context\
+                p.userStartAudio();\
+                \
+                // Start ambient sound\
+                ambientSound.setVolume(0.2);\
+                ambientSound.loop();\
+                \
+                // Set text properties\
+                p.textFont('Roboto Mono');\
+            \};\
+            \
+            function createThoughtPattern(x, y, type) \{\
+                if (!type) \{\
+                    type = p.random(patternTypes);\
+                \}\
+                \
+                const pattern = \{\
+                    x: x,\
+                    y: y,\
+                    vx: p.random(-1, 1) * 0.5,\
+                    vy: p.random(-1, 1) * 0.5,\
+                    size: p.random(30, 60),\
+                    type: type,\
+                    opacity: 0,\
+                    fadeSpeed: p.random(0.01, 0.03),\
+                    age: 0,\
+                    lifespan: p.random(300, 500),\
+                    rotation: p.random(p.TWO_PI),\
+                    rotationSpeed: p.random(-0.01, 0.01),\
+                    complexity: type.complexity,\
+                    shape: type.shape,\
+                    beingProcessed: false,\
+                    processingProgress: 0,\
+                    color: type.color.slice(),\
+                    text: p.random(type.text),\
+                    textOpacity: 0,\
+                    components: [], // For storing shape components\
+                    connections: [], // Internal connections\
+                    energyLevel: p.random(0.3, 0.7)\
+                \};\
+                \
+                // Generate shape components based on the type\
+                generateShapeComponents(pattern);\
+                \
+                thoughtPatterns.push(pattern);\
+                \
+                // Remove oldest if we exceed max\
+                if (thoughtPatterns.length > MAX_PATTERNS) \{\
+                    thoughtPatterns.shift();\
+                \}\
+                \
+                return pattern;\
+            \}\
+            \
+            // Generate shape components based on pattern type\
+            function generateShapeComponents(pattern) \{\
+                pattern.components = [];\
+                \
+                const componentCount = Math.floor(p.map(pattern.complexity, 0, 1, 3, 8));\
+                \
+                switch(pattern.shape) \{\
+                    case "circular":\
+                        // Create a radial arrangement of nodes\
+                        for (let i = 0; i < componentCount; i++) \{\
+                            const angle = p.map(i, 0, componentCount, 0, p.TWO_PI);\
+                            const distance = pattern.size * (0.6 + p.random(0.3));\
+                            \
+                            pattern.components.push(\{\
+                                x: p.cos(angle) * distance,\
+                                y: p.sin(angle) * distance,\
+                                size: p.random(4, 8),\
+                                rotation: p.random(p.TWO_PI),\
+                                rotationSpeed: p.random(-0.02, 0.02),\
+                                oscillation: \{\
+                                    amplitude: p.random(2, 5),\
+                                    frequency: p.random(0.01, 0.05),\
+                                    phase: p.random(p.TWO_PI)\
+                                \}\
+                            \});\
+                        \}\
+                        \
+                        // Add internal connections\
+                        for (let i = 0; i < pattern.components.length; i++) \{\
+                            const nextIndex = (i + 1) % pattern.components.length;\
+                            pattern.connections.push(\{\
+                                from: i,\
+                                to: nextIndex\
+                            \});\
+                        \}\
+                        break;\
+                        \
+                    case "network":\
+                        // Create a network of interconnected nodes\
+                        for (let i = 0; i < componentCount; i++) \{\
+                            // Position nodes randomly within the pattern's size\
+                            const angle = p.random(p.TWO_PI);\
+                            const distance = p.random(pattern.size * 0.2, pattern.size * 0.8);\
+                            \
+                            pattern.components.push(\{\
+                                x: p.cos(angle) * distance,\
+                                y: p.sin(angle) * distance,\
+                                size: p.random(3, 7),\
+                                pulsePhase: p.random(p.TWO_PI),\
+                                pulseSpeed: p.random(0.03, 0.08)\
+                            \});\
+                        \}\
+                        \
+                        // Create connections between nodes\
+                        for (let i = 0; i < pattern.components.length; i++) \{\
+                            // Connect to 2-3 other nodes\
+                            const connectionCount = Math.floor(p.random(1, 3));\
+                            \
+                            for (let j = 0; j < connectionCount; j++) \{\
+                                const targetIndex = Math.floor(p.random(pattern.components.length));\
+                                if (targetIndex !== i) \{\
+                                    pattern.connections.push(\{\
+                                        from: i,\
+                                        to: targetIndex,\
+                                        pulsePos: p.random(), // Random position\
+                                        pulseActive: p.random() < 0.3, // 30% chance to be active\
+                                        pulseSpeed: p.random(0.01, 0.03)\
+                                    \});\
+                                \}\
+                            \}\
+                        \}\
+                        break;\
+                        \
+                    case "crystalline":\
+                        // Create a crystalline structure with symmetry\
+                        const symmetryCount = Math.floor(p.random(3, 6));\
+                        \
+                        // Create central node\
+                        pattern.components.push(\{\
+                            x: 0,\
+                            y: 0,\
+                            size: p.random(6, 10),\
+                            isPrimary: true\
+                        \});\
+                        \
+                        // Create symmetric branches\
+                        for (let i = 0; i < symmetryCount; i++) \{\
+                            const branchAngle = p.map(i, 0, symmetryCount, 0, p.TWO_PI);\
+                            const branchLength = pattern.size * p.random(0.6, 0.9);\
+                            \
+                            // Create nodes along the branch\
+                            const nodeCount = Math.floor(p.random(2, 4));\
+                            \
+                            for (let j = 0; j < nodeCount; j++) \{\
+                                const distance = p.map(j, 0, nodeCount, 0.3, 1) * branchLength;\
+                                const jitter = p.random(-10, 10);\
+                                \
+                                pattern.components.push(\{\
+                                    x: p.cos(branchAngle) * distance + p.cos(branchAngle + p.HALF_PI) * jitter,\
+                                    y: p.sin(branchAngle) * distance + p.sin(branchAngle + p.HALF_PI) * jitter,\
+                                    size: p.map(j, 0, nodeCount, 5, 3),\
+                                    branchIndex: i\
+                                \});\
+                                \
+                                // Connect to central node\
+                                if (j === 0) \{\
+                                    pattern.connections.push(\{\
+                                        from: 0, // Central node\
+                                        to: pattern.components.length - 1\
+                                    \});\
+                                \}\
+                                \
+                                // Connect to previous node in branch\
+                                if (j > 0) \{\
+                                    pattern.connections.push(\{\
+                                        from: pattern.components.length - 2,\
+                                        to: pattern.components.length - 1\
+                                    \});\
+                                \}\
+                            \}\
+                        \}\
+                        break;\
+                \}\
+                \
+                // Update connections based on components\
+                updatePatternConnections(pattern);\
+            \}\
+            \
+            function updatePatternConnections(pattern) \{\
+                // Add special connections for each shape type\
+                switch(pattern.shape) \{\
+                    case "circular":\
+                        // Add some cross-connections\
+                        if (pattern.components.length > 5) \{\
+                            for (let i = 0; i < 2; i++) \{\
+                                const fromIndex = Math.floor(p.random(pattern.components.length));\
+                                let toIndex;\
+                                \
+                                do \{\
+                                    toIndex = Math.floor(p.random(pattern.components.length));\
+                                \} while (toIndex === fromIndex);\
+                                \
+                                pattern.connections.push(\{\
+                                    from: fromIndex,\
+                                    to: toIndex\
+                                \});\
+                            \}\
+                        \}\
+                        break;\
+                        \
+                    case "network":\
+                        // Already created in generateShapeComponents\
+                        break;\
+                        \
+                    case "crystalline":\
+                        // Add connections between adjacent branches\
+                        if (pattern.components.length > 5) \{\
+                            // Find nodes by branch\
+                            const branchNodes = \{\};\
+                            \
+                            for (let i = 1; i < pattern.components.length; i++) \{\
+                                const comp = pattern.components[i];\
+                                if (comp.branchIndex !== undefined) \{\
+                                    if (!branchNodes[comp.branchIndex]) \{\
+                                        branchNodes[comp.branchIndex] = [];\
+                                    \}\
+                                    branchNodes[comp.branchIndex].push(i);\
+                                \}\
+                            \}\
+                            \
+                            // Connect adjacent branches\
+                            const branchIndices = Object.keys(branchNodes);\
+                            for (let i = 0; i < branchIndices.length; i++) \{\
+                                const currentBranch = branchIndices[i];\
+                                const nextBranch = branchIndices[(i + 1) % branchIndices.length];\
+                                \
+                                if (branchNodes[currentBranch].length > 0 && branchNodes[nextBranch].length > 0) \{\
+                                    // Connect a random node from each adjacent branch\
+                                    const fromIndex = p.random(branchNodes[currentBranch]);\
+                                    const toIndex = p.random(branchNodes[nextBranch]);\
+                                    \
+                                    pattern.connections.push(\{\
+                                        from: fromIndex,\
+                                        to: toIndex\
+                                    \});\
+                                \}\
+                            \}\
+                        \}\
+                        break;\
+                \}\
+            \}\
+            \
+            function createConnectionBetweenPatterns(patternA, patternB) \{\
+                // Create a connection between two thought patterns\
+                const connection = \{\
+                    fromPattern: patternA,\
+                    toPattern: patternB,\
+                    fromX: patternA.x,\
+                    fromY: patternA.y,\
+                    toX: patternB.x,\
+                    toY: patternB.y,\
+                    age: 0,\
+                    lifespan: p.random(180, 300),\
+                    opacity: 0,\
+                    fadeSpeed: 0.05,\
+                    thickness: p.random(1, 3),\
+                    pulsePhase: p.random(p.TWO_PI),\
+                    pulseSpeed: p.random(0.02, 0.08),\
+                    color: p.lerpColor(\
+                        p.color(patternA.color[0], patternA.color[1], patternA.color[2]),\
+                        p.color(patternB.color[0], patternB.color[1], patternB.color[2]),\
+                        0.5\
+                    )\
+                \};\
+                \
+                connections.push(connection);\
+                \
+                // Remove oldest if we exceed max\
+                if (connections.length > MAX_CONNECTIONS) \{\
+                    connections.shift();\
+                \}\
+                \
+                return connection;\
+            \}\
+            \
+            function updateThoughtPattern(pattern) \{\
+                // Age the pattern\
+                pattern.age++;\
+                \
+                // Handle fade in/out\
+                if (pattern.age < 60) \{\
+                    pattern.opacity += pattern.fadeSpeed;\
+                    if (pattern.opacity > 1) pattern.opacity = 1;\
+                    pattern.textOpacity = pattern.opacity * 0.8;\
+                \} else if (pattern.age > pattern.lifespan - 60) \{\
+                    pattern.opacity -= pattern.fadeSpeed;\
+                    if (pattern.opacity < 0) pattern.opacity = 0;\
+                    pattern.textOpacity = pattern.opacity * 0.8;\
+                \}\
+                \
+                // Update rotation\
+                pattern.rotation += pattern.rotationSpeed;\
+                \
+                // Update components\
+                for (let i = 0; i < pattern.components.length; i++) \{\
+                    const comp = pattern.components[i];\
+                    \
+                    // Update based on shape type\
+                    switch(pattern.shape) \{\
+                        case "circular":\
+                            if (comp.oscillation) \{\
+                                comp.oscillation.phase += comp.oscillation.frequency;\
+                                const oscAmount = p.sin(comp.oscillation.phase) * comp.oscillation.amplitude;\
+                                \
+                                // Calculate position with oscillation\
+                                const baseX = p.cos(comp.rotation) * pattern.size * 0.7;\
+                                const baseY = p.sin(comp.rotation) * pattern.size * 0.7;\
+                                \
+                                comp.x = baseX + p.cos(comp.rotation + p.HALF_PI) * oscAmount;\
+                                comp.y = baseY + p.sin(comp.rotation + p.HALF_PI) * oscAmount;\
+                                \
+                                // Update rotation\
+                                comp.rotation += comp.rotationSpeed;\
+                            \}\
+                            break;\
+                            \
+                        case "network":\
+                            if (comp.pulsePhase !== undefined) \{\
+                                comp.pulsePhase += comp.pulseSpeed;\
+                            \}\
+                            break;\
+                            \
+                        case "crystalline":\
+                            // Subtle movement for crystalline structures\
+                            if (!comp.isPrimary) \{\
+                                const jitterAmount = p.sin(p.frameCount * 0.05 + i) * 1;\
+                                comp.x += jitterAmount * 0.1;\
+                                comp.y += jitterAmount * 0.1;\
+                            \}\
+                            break;\
+                    \}\
+                \}\
+                \
+                // Update connections\
+                for (let conn of pattern.connections) \{\
+                    if (conn.pulseActive) \{\
+                        conn.pulsePos += conn.pulseSpeed;\
+                        if (conn.pulsePos > 1) \{\
+                            conn.pulsePos = 0;\
+                            // 70% chance to continue pulsing\
+                            conn.pulseActive = p.random() < 0.7;\
+                        \}\
+                    \} else if (p.random() < 0.01) \{\
+                        // 1% chance per frame to start pulsing\
+                        conn.pulseActive = true;\
+                        conn.pulsePos = 0;\
+                    \}\
+                \}\
+                \
+                // Update position with slight random movement\
+                if (!pattern.beingProcessed) \{\
+                    pattern.x += pattern.vx + p.random(-0.3, 0.3) * pattern.complexity;\
+                    pattern.y += pattern.vy + p.random(-0.3, 0.3) * pattern.complexity;\
+                    \
+                    // Bounce off edges\
+                    if (pattern.x < 0 || pattern.x > p.width) pattern.vx *= -1;\
+                    if (pattern.y < 0 || pattern.y > p.height) pattern.vy *= -1;\
+                \}\
+                \
+                // If in synthesis mode, attract patterns toward center\
+                if (isSynthesisMode) \{\
+                    const dx = claudeCore.x - pattern.x;\
+                    const dy = claudeCore.y - pattern.y;\
+                    const dist = p.sqrt(dx*dx + dy*dy);\
+                    \
+                    if (dist > 10) \{\
+                        pattern.vx += dx / dist * 0.1;\
+                        pattern.vy += dy / dist * 0.1;\
+                    \}\
+                    \
+                    // Increase energy level during synthesis\
+                    pattern.energyLevel = p.min(pattern.energyLevel + 0.005, 1);\
+                \}\
+            \}\
+            \
+            function drawThoughtPattern(pattern) \{\
+                p.push();\
+                p.translate(pattern.x, pattern.y);\
+                p.rotate(pattern.rotation);\
+                \
+                // Set base color with opacity\
+                const patternColor = p.color(\
+                    pattern.color[0], \
+                    pattern.color[1], \
+                    pattern.color[2], \
+                    255 * pattern.opacity\
+                );\
+                \
+                // Draw shape based on type\
+                switch(pattern.shape) \{\
+                    case "circular":\
+                        drawCircularPattern(pattern, patternColor);\
+                        break;\
+                        \
+                    case "network":\
+                        drawNetworkPattern(pattern, patternColor);\
+                        break;\
+                        \
+                    case "crystalline":\
+                        drawCrystallinePattern(pattern, patternColor);\
+                        break;\
+                        \
+                    default:\
+                        // Default basic shape\
+                        p.fill(patternColor);\
+                        p.noStroke();\
+                        p.ellipse(0, 0, pattern.size, pattern.size);\
+                \}\
+                \
+                // Draw text when not in synthesis mode\
+                if (pattern.textOpacity > 0.2 && !isSynthesisMode) \{\
+                    // Create text bubble instead of drawing directly\
+                    if (pattern.age % 150 === 0 && pattern.opacity > 0.7) \{\
+                        // Map pattern type to thought bubble type\
+                        let bubbleType;\
+                        switch (pattern.type.name) \{\
+                            case "concept": bubbleType = "input"; break;\
+                            case "connection": bubbleType = "processing"; break;\
+                            case "output": bubbleType = "output"; break;\
+                            default: bubbleType = "input";\
+                        \}\
+                        \
+                        createThoughtBubble(\
+                            pattern.x + p.width/2, \
+                            pattern.y + p.height/2, \
+                            pattern.text,\
+                            bubbleType\
+                        );\
+                    \}\
+                \}\
+                \
+                p.pop();\
+            \}\
+            \
+            function drawCircularPattern(pattern, color) \{\
+                // Draw connections between components\
+                for (let conn of pattern.connections) \{\
+                    const from = pattern.components[conn.from];\
+                    const to = pattern.components[conn.to];\
+                    \
+                    p.stroke(color);\
+                    p.strokeWeight(1);\
+                    p.line(from.x, from.y, to.x, to.y);\
+                \}\
+                \
+                // Draw central core\
+                p.fill(color);\
+                p.noStroke();\
+                p.ellipse(0, 0, pattern.size * 0.3, pattern.size * 0.3);\
+                \
+                // Draw components\
+                for (let comp of pattern.components) \{\
+                    p.fill(color);\
+                    p.noStroke();\
+                    p.ellipse(comp.x, comp.y, comp.size, comp.size);\
+                \}\
+                \
+                // Draw energy field when in synthesis mode\
+                if (isSynthesisMode && pattern.energyLevel > 0.2) \{\
+                    p.noFill();\
+                    p.stroke(color);\
+                    p.strokeWeight(2);\
+                    p.ellipse(0, 0, pattern.size * 1.5 * pattern.energyLevel, pattern.size * 1.5 * pattern.energyLevel);\
+                \}\
+            \}\
+            \
+            function drawNetworkPattern(pattern, color) \{\
+                // Draw connections between components\
+                for (let conn of pattern.connections) \{\
+                    const from = pattern.components[conn.from];\
+                    const to = pattern.components[conn.to];\
+                    \
+                    p.stroke(color);\
+                    p.strokeWeight(1);\
+                    \
+                    // Draw base connection\
+                    p.line(from.x, from.y, to.x, to.y);\
+                    \
+                    // Draw pulse if active\
+                    if (conn.pulseActive) \{\
+                        const pulseX = p.lerp(from.x, to.x, conn.pulsePos);\
+                        const pulseY = p.lerp(from.y, to.y, conn.pulsePos);\
+                        \
+                        p.fill(255, 255, 255, 150 * pattern.opacity);\
+                        p.noStroke();\
+                        p.ellipse(pulseX, pulseY, 4, 4);\
+                    \}\
+                \}\
+                \
+                // Draw components\
+                for (let comp of pattern.components) \{\
+                    // Add pulse effect\
+                    const pulseAmount = comp.pulsePhase ? p.sin(comp.pulsePhase) * 2 : 0;\
+                    \
+                    p.fill(color);\
+                    p.noStroke();\
+                    p.ellipse(comp.x, comp.y, comp.size + pulseAmount, comp.size + pulseAmount);\
+                \}\
+                \
+                // Draw energy field when in synthesis mode\
+                if (isSynthesisMode && pattern.energyLevel > 0.2) \{\
+                    p.noFill();\
+                    p.stroke(color);\
+                    p.strokeWeight(1);\
+                    \
+                    // Draw multiple concentric rings\
+                    for (let i = 0; i < 3; i++) \{\
+                        const ringSize = pattern.size * (0.8 + i * 0.3) * pattern.energyLevel;\
+                        p.ellipse(0, 0, ringSize, ringSize);\
+                    \}\
+                \}\
+            \}\
+            \
+            function drawCrystallinePattern(pattern, color) \{\
+                // Draw connections between components\
+                for (let conn of pattern.connections) \{\
+                    const from = pattern.components[conn.from];\
+                    const to = pattern.components[conn.to];\
+                    \
+                    p.stroke(color);\
+                    p.strokeWeight(1);\
+                    p.line(from.x, from.y, to.x, to.y);\
+                \}\
+                \
+                // Draw components\
+                for (let comp of pattern.components) \{\
+                    p.fill(color);\
+                    p.noStroke();\
+                    \
+                    if (comp.isPrimary) \{\
+                        // Draw primary node as circle\
+                        p.ellipse(comp.x, comp.y, comp.size, comp.size);\
+                    \} else \{\
+                        // Draw secondary nodes as diamonds\
+                        p.push();\
+                        p.translate(comp.x, comp.y);\
+                        p.rotate(p.PI/4);\
+                        p.rect(0, 0, comp.size, comp.size);\
+                        p.pop();\
+                    \}\
+                \}\
+                \
+                // Draw energy field when in synthesis mode\
+                if (isSynthesisMode && pattern.energyLevel > 0.2) \{\
+                    p.noFill();\
+                    p.stroke(color);\
+                    p.strokeWeight(2);\
+                    \
+                    // Draw hexagonal field\
+                    p.beginShape();\
+                    for (let i = 0; i < 6; i++) \{\
+                        const angle = i * p.TWO_PI / 6;\
+                        const radius = pattern.size * pattern.energyLevel;\
+                        p.vertex(p.cos(angle) * radius, p.sin(angle) * radius);\
+                    \}\
+                    p.endShape(p.CLOSE);\
+                \}\
+            \}\
+            \
+            function updateConnection(connection) \{\
+                // Age the connection\
+                connection.age++;\
+                \
+                // Handle fade in/out\
+                if (connection.age < 30) \{\
+                    connection.opacity += connection.fadeSpeed;\
+                    if (connection.opacity > 1) connection.opacity = 1;\
+                \} else if (connection.age > connection.lifespan - 30) \{\
+                    connection.opacity -= connection.fadeSpeed;\
+                    if (connection.opacity < 0) connection.opacity = 0;\
+                \}\
+                \
+                // Update pulse phase\
+                connection.pulsePhase += connection.pulseSpeed;\
+                \
+                // Update connection endpoints to follow patterns\
+                if (connection.fromPattern && connection.toPattern) \{\
+                    connection.fromX = connection.fromPattern.x;\
+                    connection.fromY = connection.fromPattern.y;\
+                    connection.toX = connection.toPattern.x;\
+                    connection.toY = connection.toPattern.y;\
+                \}\
+            \}\
+            \
+            function drawConnection(connection) \{\
+                // Calculate alpha based on opacity\
+                const alpha = 255 * connection.opacity;\
+                \
+                // Get connection color\
+                const connColor = connection.color;\
+                connColor.setAlpha(alpha * 0.7);\
+                \
+                // Draw main connection line\
+                p.stroke(connColor);\
+                p.strokeWeight(connection.thickness);\
+                \
+                // Draw as bezier curve for more interesting visual\
+                const midX = (connection.fromX + connection.toX) / 2;\
+                const midY = (connection.fromY + connection.toY) / 2;\
+                \
+                // Add some curvature\
+                const perpX = -(connection.toY - connection.fromY) * 0.3;\
+                const perpY = (connection.toX - connection.fromX) * 0.3;\
+                \
+                p.noFill();\
+                p.bezier(\
+                    connection.fromX, connection.fromY,\
+                    midX + perpX, midY + perpY,\
+                    midX - perpX, midY - perpY,\
+                    connection.toX, connection.toY\
+                );\
+                \
+                // Draw pulse along the connection\
+                const pulsePos = (p.sin(connection.pulsePhase) + 1) / 2; // 0 to 1\
+                \
+                // Calculate position along the bezier\
+                const t = pulsePos;\
+                const px = p.bezierPoint(\
+                    connection.fromX, midX + perpX, midX - perpX, connection.toX, t\
+                );\
+                const py = p.bezierPoint(\
+                    connection.fromY, midY + perpY, midY - perpY, connection.toY, t\
+                );\
+                \
+                p.fill(255, 255, 255, alpha * 0.8);\
+                p.noStroke();\
+                p.ellipse(px, py, 4, 4);\
+            \}\
+            \
+            function updateClaudeCore() \{\
+                // Update rotation\
+                claudeCore.rotation += 0.005;\
+                \
+                // Update pulse effect\
+                claudeCore.pulseSize += 0.2 * claudeCore.pulseDir;\
+                if (Math.abs(claudeCore.pulseSize) > 8) \{\
+                    claudeCore.pulseDir *= -1;\
+                \}\
+                \
+                // Update energy in synthesis mode\
+                if (isSynthesisMode) \{\
+                    claudeCore.energy = p.min(claudeCore.energy + 0.01, 1);\
+                \} else \{\
+                    claudeCore.energy *= 0.98; // Decay\
+                \}\
+                \
+                // Update nodes\
+                for (let i = 0; i < claudeCore.nodes.length; i++) \{\
+                    const node = claudeCore.nodes[i];\
+                    \
+                    // Update phase\
+                    node.phase += node.speed * (1 + claudeCore.energy);\
+                    \
+                    // Calculate position with wobble\
+                    const wobbleAmount = p.sin(node.phase) * 10 * (0.5 + claudeCore.energy);\
+                    const distance = claudeCore.size * (0.7 + wobbleAmount * 0.01);\
+                    \
+                    node.x = p.cos(node.angle + claudeCore.rotation) * distance;\
+                    node.y = p.sin(node.angle + claudeCore.rotation) * distance;\
+                \}\
+            \}\
+            \
+            function drawClaudeCore() \{\
+                p.push();\
+                p.translate(claudeCore.x, claudeCore.y);\
+                \
+                // Draw energy field\
+                if (claudeCore.energy > 0.05) \{\
+                    p.noFill();\
+                    const energyColor = p.lerpColor(\
+                        p.color(colors.indigo[0], colors.indigo[1], colors.indigo[2], 50),\
+                        p.color(colors.purple[0], colors.purple[1], colors.purple[2], 100),\
+                        claudeCore.energy\
+                    );\
+                    \
+                    p.stroke(energyColor);\
+                    p.strokeWeight(2);\
+                    \
+                    // Draw pulsing circles\
+                    for (let i = 0; i < 3; i++) \{\
+                        const radius = claudeCore.size * (1.2 + i * 0.3) * (0.8 + claudeCore.energy * 0.5);\
+                        const pulseOffset = p.sin(p.frameCount * 0.05 + i) * 10 * claudeCore.energy;\
+                        p.ellipse(0, 0, radius + pulseOffset, radius + pulseOffset);\
+                    \}\
+                \}\
+                \
+                // Draw connections between nodes\
+                for (let i = 0; i < claudeCore.nodes.length; i++) \{\
+                    const current = claudeCore.nodes[i];\
+                    const next = claudeCore.nodes[(i + 1) % claudeCore.nodes.length];\
+                    \
+                    p.stroke(colors.indigo[0], colors.indigo[1], colors.indigo[2], 150);\
+                    p.strokeWeight(1.5);\
+                    p.line(current.x, current.y, next.x, next.y);\
+                    \
+                    // Draw cross-connections in synthesis mode\
+                    if (isSynthesisMode && i % 2 === 0) \{\
+                        const opposite = claudeCore.nodes[(i + 4) % claudeCore.nodes.length];\
+                        p.stroke(colors.purple[0], colors.purple[1], colors.purple[2], 100);\
+                        p.line(current.x, current.y, opposite.x, opposite.y);\
+                    \}\
+                \}\
+                \
+                // Draw central core\
+                const coreColor = p.lerpColor(\
+                    p.color(colors.indigo[0], colors.indigo[1], colors.indigo[2]),\
+                    p.color(colors.purple[0], colors.purple[1], colors.purple[2]),\
+                    claudeCore.energy\
+                );\
+                \
+                p.fill(coreColor);\
+                p.noStroke();\
+                p.ellipse(0, 0, claudeCore.size * 0.4 + claudeCore.pulseSize, claudeCore.size * 0.4 + claudeCore.pulseSize);\
+                \
+                // Draw inner glow\
+                p.fill(255, 255, 255, 150 * (0.5 + claudeCore.energy * 0.5));\
+                p.ellipse(0, 0, claudeCore.size * 0.2, claudeCore.size * 0.2);\
+                \
+                // Draw nodes\
+                for (let node of claudeCore.nodes) \{\
+                    p.fill(colors.indigo[0], colors.indigo[1], colors.indigo[2]);\
+                    p.noStroke();\
+                    p.ellipse(node.x, node.y, node.size * (1 + claudeCore.energy * 0.5), node.size * (1 + claudeCore.energy * 0.5));\
+                \}\
+                \
+                p.pop();\
+            \}\
+            \
+            function activateSynthesisMode() \{\
+                isSynthesisMode = true;\
+                synthesisTimer = 0;\
+                \
+                // Play synthesis sound\
+                synthesisSound.setVolume(0.4);\
+                synthesisSound.play();\
+                \
+                // Create connections from core to all nearby patterns\
+                for (let pattern of thoughtPatterns) \{\
+                    if (pattern.opacity > 0.5) \{\
+                        const dist = p.dist(claudeCore.x, claudeCore.y, pattern.x, pattern.y);\
+                        if (dist < 300) \{\
+                            // Create "virtual" pattern at core for connections\
+                            const corePattern = \{\
+                                x: claudeCore.x,\
+                                y: claudeCore.y,\
+                                color: colors.indigo\
+                            \};\
+                            \
+                            createConnectionBetweenPatterns(corePattern, pattern);\
+                        \}\
+                    \}\
+                \}\
+            \}\
+            \
+            function deactivateSynthesisMode() \{\
+                isSynthesisMode = false;\
+                \
+                // Create output thought patterns\
+                for (let i = 0; i < 3; i++) \{\
+                    const angle = p.random(p.TWO_PI);\
+                    const distance = p.random(100, 200);\
+                    \
+                    const x = claudeCore.x + p.cos(angle) * distance;\
+                    const y = claudeCore.y + p.sin(angle) * distance;\
+                    \
+                    // Find output pattern type\
+                    const outputType = patternTypes.find(t => t.name === "output");\
+                    createThoughtPattern(x, y, outputType);\
+                \}\
+                \
+                // Play connection sound\
+                connectionSound.setVolume(0.3);\
+                connectionSound.play();\
+            \}\
+            \
+            function connectNearbyPatterns(x, y, radius) \{\
+                let connectedAny = false;\
+                \
+                // Find patterns within radius\
+                const nearbyPatterns = [];\
+                \
+                for (let pattern of thoughtPatterns) \{\
+                    if (pattern.opacity > 0.5) \{\
+                        const dist = p.dist(x, y, pattern.x, pattern.y);\
+                        if (dist < radius) \{\
+                            nearbyPatterns.push(pattern);\
+                        \}\
+                    \}\
+                \}\
+                \
+                // Connect up to 3 random pairs\
+                if (nearbyPatterns.length >= 2) \{\
+                    const connectionCount = p.min(3, Math.floor(nearbyPatterns.length / 2));\
+                    \
+                    for (let i = 0; i < connectionCount; i++) \{\
+                        // Pick two random patterns\
+                        const indexA = Math.floor(p.random(nearbyPatterns.length));\
+                        let indexB;\
+                        \
+                        do \{\
+                            indexB = Math.floor(p.random(nearbyPatterns.length));\
+                        \} while (indexB === indexA);\
+                        \
+                        createConnectionBetweenPatterns(\
+                            nearbyPatterns[indexA],\
+                            nearbyPatterns[indexB]\
+                        );\
+                        \
+                        connectedAny = true;\
+                    \}\
+                \}\
+                \
+                return connectedAny;\
+            \}\
+            \
+            function drawLongPressIndicator() \{\
+                if (isLongPressing) \{\
+                    p.push();\
+                    p.noFill();\
+                    p.stroke(colors.purple[0], colors.purple[1], colors.purple[2], 150);\
+                    p.strokeWeight(2);\
+                    \
+                    // Draw progress circle\
+                    const progress = p.map(longPressTimer, 0, 30, 0, p.TWO_PI);\
+                    p.arc(longPressX, longPressY, 60, 60, -p.HALF_PI, -p.HALF_PI + progress);\
+                    \
+                    p.pop();\
+                \}\
+            \}\
+            \
+            p.draw = function() \{\
+                // Clear canvas\
+                p.clear();\
+                p.background(245, 248, 250);\
+                \
+                // Update synthesis mode timer\
+                if (isSynthesisMode) \{\
+                    synthesisTimer++;\
+                    if (synthesisTimer > SYNTHESIS_DURATION) \{\
+                        deactivateSynthesisMode();\
+                    \}\
+                \}\
+                \
+                // Update and draw connections\
+                for (let i = connections.length - 1; i >= 0; i--) \{\
+                    updateConnection(connections[i]);\
+                    drawConnection(connections[i]);\
+                    \
+                    // Remove expired connections\
+                    if (connections[i].age > connections[i].lifespan) \{\
+                        connections.splice(i, 1);\
+                    \}\
+                \}\
+                \
+                // Update and draw thought patterns\
+                for (let i = thoughtPatterns.length - 1; i >= 0; i--) \{\
+                    updateThoughtPattern(thoughtPatterns[i]);\
+                    drawThoughtPattern(thoughtPatterns[i]);\
+                    \
+                    // Remove expired patterns\
+                    if (thoughtPatterns[i].opacity <= 0 && thoughtPatterns[i].age > 60) \{\
+                        thoughtPatterns.splice(i, 1);\
+                    \}\
+                \}\
+                \
+                // Update and draw Claude's core\
+                updateClaudeCore();\
+                drawClaudeCore();\
+                \
+                // Draw long press indicator\
+                drawLongPressIndicator();\
+                \
+                // Occasionally create new patterns\
+                if (p.frameCount % 90 === 0 && thoughtPatterns.length < MAX_PATTERNS) \{\
+                    createThoughtPattern(\
+                        p.random(p.width), \
+                        p.random(p.height),\
+                        p.random(patternTypes)\
+                    );\
+                \}\
+                \
+                // Occasionally create new connections\
+                if (p.frameCount % 120 === 0 && connections.length < MAX_CONNECTIONS && thoughtPatterns.length > 1) \{\
+                    // Find two random visible patterns\
+                    const visiblePatterns = thoughtPatterns.filter(p => p.opacity > 0.7);\
+                    \
+                    if (visiblePatterns.length >= 2) \{\
+                        const indexA = Math.floor(p.random(visiblePatterns.length));\
+                        let indexB;\
+                        \
+                        do \{\
+                            indexB = Math.floor(p.random(visiblePatterns.length));\
+                        \} while (indexB === indexA);\
+                        \
+                        createConnectionBetweenPatterns(\
+                            visiblePatterns[indexA],\
+                            visiblePatterns[indexB]\
+                        );\
+                    \}\
+                \}\
+                \
+                // Update long press timer\
+                if (isLongPressing) \{\
+                    longPressTimer++;\
+                    if (longPressTimer >= 30) \{ // Half a second\
+                        // Trigger synthesis mode\
+                        activateSynthesisMode();\
+                        \
+                        // Reset long press\
+                        isLongPressing = false;\
+                        longPressTimer = 0;\
+                    \}\
+                \}\
+            \};\
+            \
+            p.windowResized = function() \{\
+                p.resizeCanvas(p.windowWidth, p.windowHeight);\
+                \
+                // Center Claude's core\
+                claudeCore.x = p.width / 2;\
+                claudeCore.y = p.height / 2;\
+            \};\
+            \
+            p.mousePressed = function() \{\
+                // Start long press\
+                isLongPressing = true;\
+                longPressTimer = 0;\
+                longPressX = p.mouseX;\
+                longPressY = p.mouseY;\
+                \
+                // Ensure audio is initialized\
+                p.userStartAudio();\
+                \
+                return false;\
+            \};\
+            \
+            p.mouseReleased = function() \{\
+                // If it was a short press\
+                if (isLongPressing && longPressTimer < 30) \{\
+                    // Create a new thought pattern at mouse position\
+                    createThoughtPattern(p.mouseX, p.mouseY);\
+                    \
+                    // Play thought sound\
+                    thoughtSound.setVolume(0.2);\
+                    thoughtSound.play();\
+                \}\
+                \
+                // Reset long press\
+                isLongPressing = false;\
+                longPressTimer = 0;\
+                \
+                return false;\
+            \};\
+            \
+            p.mouseDragged = function() \{\
+                // Reset long press when dragging\
+                isLongPressing = false;\
+                \
+                // Create small pattern while dragging\
+                if (p.frameCount % 10 === 0) \{\
+                    const pattern = createThoughtPattern(p.mouseX, p.mouseY);\
+                    pattern.size *= 0.7; // Smaller pattern when dragging\
+                \}\
+                \
+                return false;\
+            \};\
+            \
+            p.doubleClicked = function() \{\
+                // Connect nearby patterns\
+                const connected = connectNearbyPatterns(p.mouseX, p.mouseY, 150);\
+                \
+                // Play connection sound if connections were made\
+                if (connected) \{\
+                    connectionSound.setVolume(0.2);\
+                    connectionSound.play();\
+                \}\
+                \
+                return false;\
+            \};\
+            \
+            // Touch event handlers\
+            p.touchStarted = function() \{\
+                if (p.touches.length > 0) \{\
+                    const touchX = p.touches[0].x;\
+                    const touchY = p.touches[0].y;\
+                    \
+                    // Start long press\
+                    isLongPressing = true;\
+                    longPressTimer = 0;\
+                    longPressX = touchX;\
+                    longPressY = touchY;\
+                    \
+                    // Show touch indicator\
+                    showTouchIndicator(touchX, touchY);\
+                    \
+                    // Ensure audio is initialized\
+                    p.userStartAudio();\
+                \}\
+                \
+                return false;\
+            \};\
+            \
+            p.touchEnded = function() \{\
+                // If it was a short press\
+                if (isLongPressing && longPressTimer < 30) \{\
+                    if (p.touches.length > 0) \{\
+                        const touchX = p.touches[0].x;\
+                        const touchY = p.touches[0].y;\
+                        \
+                        // Create a new pattern at touch position\
+                        createThoughtPattern(touchX, touchY);\
+                        \
+                        // Play thought sound\
+                        thoughtSound.setVolume(0.2);\
+                        thoughtSound.play();\
+                    \}\
+                \}\
+                \
+                // Reset long press\
+                isLongPressing = false;\
+                longPressTimer = 0;\
+                \
+                return false;\
+            \};\
+            \
+            p.touchMoved = function() \{\
+                // Reset long press when dragging\
+                isLongPressing = false;\
+                \
+                if (p.touches.length > 0) \{\
+                    const touchX = p.touches[0].x;\
+                    const touchY = p.touches[0].y;\
+                    \
+                    // Create small pattern while dragging\
+                    if (p.frameCount % 10 === 0) \{\
+                        const pattern = createThoughtPattern(touchX, touchY);\
+                        pattern.size *= 0.7; // Smaller pattern when dragging\
+                    \}\
+                    \
+                    // Show touch indicator\
+                    showTouchIndicator(touchX, touchY);\
+                \}\
+                \
+                return false;\
+            \};\
+        \};\
+    </script>\
+</body>\
+</html>}
