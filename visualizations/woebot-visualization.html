@@ -457,6 +457,14 @@
             // Central palm - representing Woebot's gesture
             let palm;
             
+            // Hand gesture animation
+            let handGestureFrames = [];
+            let currentFrame = 0;
+            let frameTimer = 0;
+            const FRAME_DURATION = 8; // How many draw cycles each frame displays
+            let therapeuticFrames = []; // Separate frames for therapeutic mode
+            let currentTherapeuticFrame = 0;
+            
             // Audio elements
             let calmSound;
             let therapeuticSound;
@@ -507,24 +515,38 @@
                     calmSound = p.loadSound('woebot-calm.mp3');
                     therapeuticSound = p.loadSound('woebot-therapeutic.mp3');
                     tealAmberSound = p.loadSound('woebot-teal-amber.mp3');
+                    
+                    // Load hand gesture animation frames
+                    for (let i = 1; i <= 6; i++) {
+                        handGestureFrames.push(p.loadImage('hand-gesture-' + i + '.png'));
+                    }
+                    
+                    // Load therapeutic hand gesture frames
+                    for (let i = 1; i <= 6; i++) {
+                        therapeuticFrames.push(p.loadImage('therapeutic-hand-' + i + '.png'));
+                    }
                 } catch(e) {
-                    console.error("Error loading sounds:", e);
-                    // Create silent replacements
+                    console.error("Error loading assets:", e);
+                    // Create silent replacements for sounds
                     calmSound = {
                         play: function() { console.log("Would play calm sound"); },
                         setVolume: function() {},
-                        stop: function() {}  // Added this method
+                        stop: function() {}
                     };
                     therapeuticSound = {
                         play: function() { console.log("Would play therapeutic sound"); },
                         setVolume: function() {},
-                        stop: function() {}  // Added this method
+                        stop: function() {}
                     };
                     tealAmberSound = {
                         play: function() { console.log("Would play teal-amber sound"); },
                         setVolume: function() {},
-                        stop: function() {}  // Added this method
+                        stop: function() {}
                     };
+                    
+                    // Create empty objects for images if they fail to load
+                    handGestureFrames = Array(6).fill(null);
+                    therapeuticFrames = Array(6).fill(null);
                 }
             };
             
@@ -831,11 +853,25 @@
                     palm.color[0] = p.lerp(palm.color[0], colors.amber[0], 0.05);
                     palm.color[1] = p.lerp(palm.color[1], colors.amber[1], 0.05);
                     palm.color[2] = p.lerp(palm.color[2], colors.amber[2], 0.05);
+                    
+                    // Update therapeutic animation
+                    frameTimer++;
+                    if (frameTimer >= FRAME_DURATION) {
+                        currentTherapeuticFrame = (currentTherapeuticFrame + 1) % therapeuticFrames.length;
+                        frameTimer = 0;
+                    }
                 } else {
                     // Transition color back toward teal
                     palm.color[0] = p.lerp(palm.color[0], colors.teal[0], 0.05);
                     palm.color[1] = p.lerp(palm.color[1], colors.teal[1], 0.05);
                     palm.color[2] = p.lerp(palm.color[2], colors.teal[2], 0.05);
+                    
+                    // Update regular animation
+                    frameTimer++;
+                    if (frameTimer >= FRAME_DURATION) {
+                        currentFrame = (currentFrame + 1) % handGestureFrames.length;
+                        frameTimer = 0;
+                    }
                 }
             }
             
@@ -854,27 +890,38 @@
                 p.strokeWeight(3);
                 p.ellipse(0, 0, palm.size + palm.pulseSize, palm.size + palm.pulseSize);
                 
-                // Draw palm lines (symbolizing an open palm)
-                p.stroke(palm.color[0], palm.color[1], palm.color[2], 150);
-                p.strokeWeight(2);
+                // Draw the appropriate hand gesture based on mode
+                const frames = isTherapeuticMode ? therapeuticFrames : handGestureFrames;
+                const currentAnimFrame = isTherapeuticMode ? currentTherapeuticFrame : currentFrame;
                 
-                // Life line (curved)
-                p.beginShape();
-                p.noFill();
-                p.curveVertex(-30, -20);
-                p.curveVertex(-20, 0);
-                p.curveVertex(-10, 20);
-                p.curveVertex(0, 30);
-                p.endShape();
-                
-                // Heart line (straight)
-                p.line(-30, -10, 30, -10);
-                
-                // Head line (medium)
-                p.line(-20, 10, 20, 10);
-                
-                // Fate line (vertical)
-                p.line(0, -30, 0, 30);
+                if (frames.length > 0 && frames[currentAnimFrame]) {
+                    // Draw the current animation frame
+                    const img = frames[currentAnimFrame];
+                    const imgSize = palm.size * 1.2; // Scale image to fit within palm
+                    p.image(img, -imgSize/2, -imgSize/2, imgSize, imgSize);
+                } else {
+                    // Fallback: Draw the original palm lines if images aren't available
+                    p.stroke(palm.color[0], palm.color[1], palm.color[2], 150);
+                    p.strokeWeight(2);
+                    
+                    // Life line (curved)
+                    p.beginShape();
+                    p.noFill();
+                    p.curveVertex(-30, -20);
+                    p.curveVertex(-20, 0);
+                    p.curveVertex(-10, 20);
+                    p.curveVertex(0, 30);
+                    p.endShape();
+                    
+                    // Heart line (straight)
+                    p.line(-30, -10, 30, -10);
+                    
+                    // Head line (medium)
+                    p.line(-20, 10, 20, 10);
+                    
+                    // Fate line (vertical)
+                    p.line(0, -30, 0, 30);
+                }
                 
                 p.pop();
                 
