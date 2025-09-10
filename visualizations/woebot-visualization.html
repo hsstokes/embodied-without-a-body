@@ -284,7 +284,7 @@
     <!-- Tutorial overlay -->
     <div id="tutorial-overlay" class="tutorial-overlay">
         <div id="tutorial-hint" class="tutorial-hint">
-            <p id="tutorial-text">Tap anywhere to start</p>
+            <p id="tutorial-text">Tap and drag to reveal emotional patterns</p>
         </div>
     </div>
     
@@ -302,11 +302,11 @@
             <div class="title">Woebot: Therapeutic Processing</div>
             
             <div class="description">
-                Experience how Woebot detects and responds to emotional patterns, transforming them through therapeutic frameworks rather than simulating emotions itself.
+                Experience how Woebot detects and responds to cognitive distortions, transforming them through therapeutic frameworks rather than simulating emotions itself.
             </div>
             
             <div class="description">
-                This visualization reveals Woebot's "soothe→solve" progression, where emotional states are recognized as patterns to be reshaped rather than states to be simulated.
+                This visualization reveals Woebot's "soothe→solve" progression, where cognitive patterns are recognized and reframed rather than being absorbed or amplified.
             </div>
             
             <div class="description">
@@ -342,7 +342,7 @@
         let tutorialStep = 0;
         let tutorialShown = false;
         const tutorialSteps = [
-            "Tap and drag to reveal emotional patterns",
+            "Tap and drag to reveal cognitive distortions",
             "Double-tap to trigger a therapeutic response",
             "Hold to activate the soothe→solve progression"
         ];
@@ -446,7 +446,7 @@
             // Store reference to p5 instance
             p5Instance = p;
             
-            // Emotion patterns data structure
+            // Cognitive distortion patterns
             let patterns = [];
             const MAX_PATTERNS = 30;
             
@@ -463,6 +463,7 @@
                 currentFrame: 0,
                 isPlaying: true, // Always showing the palm
                 frameDuration: 8, // How many draw cycles each frame displays
+                frameTimer: 0,
                 opacity: 1,
                 size: 200,
                 frameImages: [],
@@ -490,27 +491,109 @@
                 neutral: [180, 180, 180]
             };
             
-            // Emotional pattern types
+            // Cognitive distortion types (CBT focus)
             const patternTypes = [
-                { name: "catastrophizing", color: colors.error, spiral: true, rigidity: 0.8 },
-                { name: "rumination", color: colors.error, spiral: true, rigidity: 0.5 },
-                { name: "mind-reading", color: colors.error, spiral: false, rigidity: 0.7 },
-                { name: "should-statements", color: colors.error, spiral: false, rigidity: 0.9 },
-                { name: "labeling", color: colors.error, spiral: false, rigidity: 0.6 },
-                { name: "hopelessness", color: colors.error, spiral: true, rigidity: 0.7 },
-                { name: "dissociation", color: colors.neutral, spiral: false, rigidity: 0.2 },
-                { name: "neutral", color: colors.neutral, spiral: false, rigidity: 0.4 }
+                { 
+                    name: "catastrophizing", 
+                    color: colors.error, 
+                    shape: "thought-spiral", 
+                    rigidity: 0.8,
+                    text: ["What if everything fails?", "It's going to be a disaster", "I can't handle it"]
+                },
+                { 
+                    name: "black-and-white", 
+                    color: colors.error, 
+                    shape: "binary", 
+                    rigidity: 0.7,
+                    text: ["Always or never", "Perfect or worthless", "Success or failure"]
+                },
+                { 
+                    name: "should-statements", 
+                    color: colors.error, 
+                    shape: "arrows", 
+                    rigidity: 0.9,
+                    text: ["I should always...", "I must never...", "Everyone has to..."]
+                },
+                { 
+                    name: "mind-reading", 
+                    color: colors.error, 
+                    shape: "thought-bubbles", 
+                    rigidity: 0.6,
+                    text: ["They think I'm...", "Everyone is judging...", "I know they don't like..."]
+                },
+                { 
+                    name: "overgeneralizing", 
+                    color: colors.error, 
+                    shape: "expanding", 
+                    rigidity: 0.65,
+                    text: ["This always happens", "Everything goes wrong", "Nothing works out"]
+                },
+                { 
+                    name: "filtering", 
+                    color: colors.error, 
+                    shape: "filter", 
+                    rigidity: 0.5,
+                    text: ["Focus on negative", "Ignore positives", "Only see problems"]
+                },
+                { 
+                    name: "emotional-reasoning", 
+                    color: colors.error, 
+                    shape: "cloud", 
+                    rigidity: 0.7,
+                    text: ["I feel it so it's true", "My emotions prove it", "It feels real"]
+                }
             ];
             
-            // Therapeutic response types
+            // Therapeutic response types based on CBT
             const responseTypes = [
-                { name: "grounding", color: colors.teal, duration: 180 },
-                { name: "reframe", color: colors.teal, duration: 120 },
-                { name: "validation", color: colors.teal, duration: 90 },
-                { name: "activation", color: colors.amber, duration: 150 },
-                { name: "problem-solving", color: colors.amber, duration: 160 },
-                { name: "mindfulness", color: colors.teal, duration: 100 }
+                { 
+                    name: "reframe thoughts", 
+                    color: colors.teal, 
+                    duration: 180,
+                    text: ["Is there another way to see this?", "What's a more balanced view?"]
+                },
+                { 
+                    name: "cognitive check", 
+                    color: colors.teal, 
+                    duration: 120,
+                    text: ["Is this thought helpful?", "What's the evidence?"]
+                },
+                { 
+                    name: "validate feelings", 
+                    color: colors.teal, 
+                    duration: 90,
+                    text: ["It's normal to feel this way", "Your feelings are valid"]
+                },
+                { 
+                    name: "behavioral activation", 
+                    color: colors.amber, 
+                    duration: 150,
+                    text: ["What small step can you take?", "What might help right now?"]
+                },
+                { 
+                    name: "problem-solving", 
+                    color: colors.amber, 
+                    duration: 160,
+                    text: ["What solutions could work?", "Let's break this down"]
+                },
+                { 
+                    name: "mindfulness", 
+                    color: colors.teal, 
+                    duration: 100,
+                    text: ["Notice without judging", "Be present with this"]
+                }
             ];
+            
+            // CBT reframes for each cognitive distortion (used during processing)
+            const reframeMap = {
+                "catastrophizing": ["What's most likely to happen?", "How would I cope if it did happen?"],
+                "black-and-white": ["Where's the middle ground?", "What's the gray area here?"],
+                "should-statements": ["What's a more flexible approach?", "What if I chose to instead?"],
+                "mind-reading": ["What evidence do I actually have?", "Could there be other interpretations?"],
+                "overgeneralizing": ["Is this always true?", "What are the exceptions?"],
+                "filtering": ["What positives am I missing?", "What's the whole picture?"],
+                "emotional-reasoning": ["Feelings aren't always facts", "What would the evidence say?"]
+            };
             
             p.preload = function() {
                 // Load sounds
@@ -599,18 +682,19 @@
                 
                 // Initialize audio context
                 p.userStartAudio();
+                
+                // Set text properties
+                p.textFont('Roboto Mono');
             };
             
             // Update hand animation
             function updateHandAnimation() {
                 // Update animation frame
-                if (p.frameCount % handAnimation.frameDuration === 0) {
+                handAnimation.frameTimer++;
+                if (handAnimation.frameTimer >= handAnimation.frameDuration) {
                     handAnimation.currentFrame = (handAnimation.currentFrame + 1) % handAnimation.frameCount;
+                    handAnimation.frameTimer = 0;
                 }
-                
-                // Keep animation centered in the palm
-                handAnimation.x = palm.x;
-                handAnimation.y = palm.y;
                 
                 // Make the hand animation respond to therapeutic mode
                 if (isTherapeuticMode) {
@@ -646,11 +730,11 @@
                     const aspectRatio = img.height / img.width;
                     const drawHeight = anim.size * aspectRatio;
                     
-                    // Draw the current frame centered at x,y
+                    // Draw the current frame centered at palm position
                     p.image(
                         img,
-                        anim.x - anim.size/2,
-                        anim.y - drawHeight/2,
+                        palm.x - anim.size/2,
+                        palm.y - drawHeight/2,
                         anim.size,
                         drawHeight
                     );
@@ -670,7 +754,7 @@
                     y: y,
                     vx: p.random(-1, 1),
                     vy: p.random(-1, 1),
-                    size: p.random(20, 60),
+                    size: p.random(30, 70),
                     type: type,
                     opacity: 0,
                     fadeSpeed: p.random(0.01, 0.03),
@@ -678,17 +762,22 @@
                     lifespan: p.random(300, 600),
                     rotation: p.random(p.TWO_PI),
                     rotationSpeed: p.random(-0.02, 0.02) * type.rigidity,
-                    vertices: Math.floor(p.random(3, 7)),
                     distortion: type.rigidity * 0.5,
-                    spiral: type.spiral,
-                    spiralTightness: p.random(0.1, 0.3),
-                    spiralRotation: p.random(p.TWO_PI),
+                    shape: type.shape,
                     beingProcessed: false,
                     processingProgress: 0,
                     originalColor: type.color.slice(),
                     currentColor: type.color.slice(),
-                    targetColor: type.color.slice()
+                    targetColor: type.color.slice(),
+                    text: p.random(type.text),
+                    reframeText: "",
+                    textSize: p.random(10, 14),
+                    textOpacity: 0,
+                    shapePoints: [] // For storing shape vertices
                 };
+                
+                // Generate shape points based on the type
+                generateShapePoints(pattern);
                 
                 patterns.push(pattern);
                 
@@ -700,15 +789,162 @@
                 return pattern;
             }
             
+            // Generate shape points based on pattern type
+            function generateShapePoints(pattern) {
+                pattern.shapePoints = [];
+                const numPoints = Math.floor(p.random(6, 12));
+                
+                switch(pattern.shape) {
+                    case "thought-spiral":
+                        // Generate spiral points
+                        for (let i = 0; i < numPoints * 3; i++) {
+                            const angle = i * 0.5;
+                            const radius = i * 0.8 * pattern.distortion;
+                            if (radius > pattern.size) break;
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius,
+                                size: p.map(i, 0, numPoints * 3, pattern.size * 0.2, 5)
+                            });
+                        }
+                        break;
+                        
+                    case "binary":
+                        // Create a shape with two distinct halves
+                        for (let i = 0; i < numPoints; i++) {
+                            const angle = p.map(i, 0, numPoints, 0, p.TWO_PI);
+                            const radius = pattern.size * (i < numPoints/2 ? 1 : 0.6);
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius
+                            });
+                        }
+                        break;
+                        
+                    case "arrows":
+                        // Create downward pointing arrows
+                        const arrowCount = Math.floor(p.random(3, 6));
+                        for (let i = 0; i < arrowCount; i++) {
+                            const angle = p.map(i, 0, arrowCount, 0, p.TWO_PI);
+                            const startRadius = pattern.size * 0.3;
+                            const endRadius = pattern.size;
+                            
+                            // Arrow start point
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * startRadius,
+                                y: p.sin(angle) * startRadius,
+                                isArrow: true,
+                                arrowAngle: angle,
+                                length: endRadius - startRadius
+                            });
+                        }
+                        break;
+                        
+                    case "thought-bubbles":
+                        // Create multiple thought bubbles
+                        const bubbleCount = Math.floor(p.random(3, 6));
+                        for (let i = 0; i < bubbleCount; i++) {
+                            const angle = p.map(i, 0, bubbleCount, 0, p.TWO_PI);
+                            const radius = p.random(pattern.size * 0.3, pattern.size);
+                            const bubbleSize = p.random(pattern.size * 0.2, pattern.size * 0.4);
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius,
+                                isBubble: true,
+                                size: bubbleSize
+                            });
+                        }
+                        break;
+                        
+                    case "expanding":
+                        // Create expanding ripples
+                        const rippleCount = Math.floor(p.random(3, 5));
+                        for (let i = 0; i < rippleCount; i++) {
+                            const radius = p.map(i, 0, rippleCount - 1, pattern.size * 0.2, pattern.size);
+                            
+                            pattern.shapePoints.push({
+                                isRipple: true,
+                                radius: radius
+                            });
+                        }
+                        break;
+                        
+                    case "filter":
+                        // Create a filter/lens shape
+                        for (let i = 0; i < numPoints; i++) {
+                            const angle = p.map(i, 0, numPoints, 0, p.TWO_PI);
+                            // Create wavy edges for the filter
+                            const waveAmount = p.sin(angle * 4) * pattern.distortion * 15;
+                            const radius = pattern.size + waveAmount;
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius
+                            });
+                        }
+                        break;
+                        
+                    case "cloud":
+                        // Create a cloud-like shape for emotional reasoning
+                        const blobCount = Math.floor(p.random(6, 10));
+                        for (let i = 0; i < blobCount; i++) {
+                            const angle = p.map(i, 0, blobCount, 0, p.TWO_PI);
+                            const radius = pattern.size * (0.6 + p.random(0.4) * pattern.distortion);
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius,
+                                controlPoint1X: p.cos(angle + 0.2) * radius * 1.2,
+                                controlPoint1Y: p.sin(angle + 0.2) * radius * 1.2,
+                                controlPoint2X: p.cos(angle - 0.2) * radius * 1.2,
+                                controlPoint2Y: p.sin(angle - 0.2) * radius * 1.2
+                            });
+                        }
+                        break;
+                        
+                    default:
+                        // Default to a basic shape with some randomness
+                        for (let i = 0; i < numPoints; i++) {
+                            const angle = p.map(i, 0, numPoints, 0, p.TWO_PI);
+                            const radius = pattern.size * (1 + p.random(-0.3, 0.3) * pattern.distortion);
+                            
+                            pattern.shapePoints.push({
+                                x: p.cos(angle) * radius,
+                                y: p.sin(angle) * radius
+                            });
+                        }
+                }
+            }
+            
             function createTherapeuticResponse(x, y, targetPattern) {
-                const type = p.random(responseTypes);
+                // Pick a therapeutic approach appropriate for the pattern type
+                let type;
+                if (targetPattern) {
+                    // Get appropriate response types for the cognitive distortion
+                    if (targetPattern.type.name === "catastrophizing" || targetPattern.type.name === "overgeneralizing") {
+                        // Reality testing works well for these
+                        type = responseTypes.find(r => r.name === "cognitive check" || r.name === "reframe thoughts");
+                    } else if (targetPattern.type.name === "should-statements" || targetPattern.type.name === "black-and-white") {
+                        // Flexibility approaches work well for rigid thinking
+                        type = responseTypes.find(r => r.name === "reframe thoughts");
+                    } else {
+                        // Random appropriate response for others
+                        type = p.random(responseTypes);
+                    }
+                } else {
+                    // No target pattern, pick random
+                    type = p.random(responseTypes);
+                }
                 
                 const response = {
                     x: x,
                     y: y,
                     targetPattern: targetPattern,
                     type: type,
-                    size: 50,
+                    size: 60,
                     opacity: 0,
                     fadeSpeed: 0.05,
                     age: 0,
@@ -717,7 +953,7 @@
                     expandWave: 0,
                     expandSpeed: 2,
                     expandOpacity: 1,
-                    text: type.name,
+                    text: p.random(type.text),
                     pulseAmount: 0,
                     pulseDir: 1
                 };
@@ -740,9 +976,11 @@
                 if (pattern.age < 60) {
                     pattern.opacity += pattern.fadeSpeed;
                     if (pattern.opacity > 1) pattern.opacity = 1;
+                    pattern.textOpacity = pattern.opacity * 0.8;
                 } else if (pattern.age > pattern.lifespan - 60) {
                     pattern.opacity -= pattern.fadeSpeed;
                     if (pattern.opacity < 0) pattern.opacity = 0;
+                    pattern.textOpacity = pattern.opacity * 0.8;
                 }
                 
                 // Update rotation
@@ -768,6 +1006,18 @@
                     
                     // Update processing progress
                     pattern.processingProgress += 0.01;
+                    
+                    // Halfway through processing, set reframe text
+                    if (pattern.processingProgress >= 0.5 && pattern.reframeText === "") {
+                        // Get appropriate reframe for this cognitive distortion
+                        if (reframeMap[pattern.type.name]) {
+                            pattern.reframeText = p.random(reframeMap[pattern.type.name]);
+                        } else {
+                            // Fallback reframe
+                            pattern.reframeText = "Consider a different perspective";
+                        }
+                    }
+                    
                     if (pattern.processingProgress >= 1) {
                         // Finished processing
                         pattern.beingProcessed = false;
@@ -788,48 +1038,62 @@
                     pattern.currentColor[2], 
                     255 * pattern.opacity
                 );
-                p.fill(patternColor);
                 
-                // Draw different shapes based on pattern type
-                if (pattern.spiral) {
-                    // Draw spiral pattern (for rumination, catastrophizing)
-                    p.noStroke();
-                    p.beginShape();
-                    
-                    for (let i = 0; i < 200; i++) {
-                        const angle = pattern.spiralRotation + i * 0.1;
-                        const radius = i * pattern.spiralTightness;
+                // Draw shape based on type
+                switch(pattern.shape) {
+                    case "thought-spiral":
+                        drawThoughtSpiral(pattern, patternColor);
+                        break;
                         
-                        if (radius > pattern.size) break;
+                    case "binary":
+                        drawBinaryShape(pattern, patternColor);
+                        break;
                         
-                        const x = p.cos(angle) * radius;
-                        const y = p.sin(angle) * radius;
+                    case "arrows":
+                        drawArrowsShape(pattern, patternColor);
+                        break;
                         
-                        p.vertex(x, y);
-                    }
-                    
-                    p.endShape();
-                } else {
-                    // Draw angular shape (for other pattern types)
-                    p.beginShape();
-                    
-                    for (let i = 0; i < pattern.vertices; i++) {
-                        const angle = p.map(i, 0, pattern.vertices, 0, p.TWO_PI);
+                    case "thought-bubbles":
+                        drawThoughtBubbles(pattern, patternColor);
+                        break;
                         
-                        // Add distortion based on rigidity
-                        const distortionAmount = pattern.distortion * p.sin(angle * 3 + p.frameCount * 0.05);
-                        const radius = pattern.size * (1 + distortionAmount * 0.2);
+                    case "expanding":
+                        drawExpandingShape(pattern, patternColor);
+                        break;
                         
-                        const x = p.cos(angle) * radius;
-                        const y = p.sin(angle) * radius;
+                    case "filter":
+                        drawFilterShape(pattern, patternColor);
+                        break;
                         
-                        p.vertex(x, y);
-                    }
-                    
-                    p.endShape(p.CLOSE);
+                    case "cloud":
+                        drawCloudShape(pattern, patternColor);
+                        break;
+                        
+                    default:
+                        // Default shape
+                        p.fill(patternColor);
+                        p.noStroke();
+                        p.ellipse(0, 0, pattern.size, pattern.size);
                 }
                 
-                // If pattern is being processed, show progress
+                // Draw text representing cognitive distortion
+                if (pattern.textOpacity > 0.1 && !pattern.beingProcessed) {
+                    p.fill(255, 255, 255, 255 * pattern.textOpacity);
+                    p.noStroke();
+                    p.textSize(pattern.textSize);
+                    p.textAlign(p.CENTER, p.CENTER);
+                    
+                    // Text position depends on shape
+                    let textY = 0;
+                    if (pattern.shape === "thought-spiral" || pattern.shape === "expanding") {
+                        textY = pattern.size * 0.6;
+                    }
+                    
+                    // Draw text with word wrap
+                    drawWrappedText(pattern.text, 0, textY, pattern.size * 1.5);
+                }
+                
+                // If pattern is being processed, show progress and reframing
                 if (pattern.beingProcessed) {
                     // Draw processing indicator
                     p.noFill();
@@ -837,9 +1101,234 @@
                     p.strokeWeight(3);
                     p.arc(0, 0, pattern.size * 1.5, pattern.size * 1.5, 
                          -p.HALF_PI, -p.HALF_PI + p.TWO_PI * pattern.processingProgress);
+                    
+                    // Show appropriate text based on processing stage
+                    p.fill(255, 255, 255, 200 * pattern.opacity);
+                    p.noStroke();
+                    p.textSize(pattern.textSize);
+                    p.textAlign(p.CENTER, p.CENTER);
+                    
+                    if (pattern.processingProgress < 0.5) {
+                        // First half: "soothe" phase - acknowledge the thought
+                        drawWrappedText(pattern.text, 0, 0, pattern.size * 1.5);
+                        p.textSize(pattern.textSize * 0.8);
+                        p.fill(255, 255, 255, 100 * pattern.opacity);
+                        p.text("acknowledging", 0, pattern.size * 0.6);
+                    } else {
+                        // Second half: "solve" phase - reframe the thought
+                        drawWrappedText(pattern.reframeText, 0, 0, pattern.size * 1.5);
+                        p.textSize(pattern.textSize * 0.8);
+                        p.fill(255, 255, 255, 100 * pattern.opacity);
+                        p.text("reframing", 0, pattern.size * 0.6);
+                    }
                 }
                 
                 p.pop();
+            }
+            
+            // Helper function to draw wrapped text
+            function drawWrappedText(text, x, y, maxWidth) {
+                const words = text.split(' ');
+                let line = '';
+                let testLine = '';
+                let lineHeight = p.textAscent() + p.textDescent() + 2;
+                let yPos = y;
+                
+                for (let i = 0; i < words.length; i++) {
+                    testLine = line + words[i] + ' ';
+                    if (p.textWidth(testLine) > maxWidth) {
+                        p.text(line, x, yPos);
+                        line = words[i] + ' ';
+                        yPos += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                p.text(line, x, yPos);
+            }
+            
+            // Shape drawing functions
+            function drawThoughtSpiral(pattern, color) {
+                p.noStroke();
+                
+                // Draw base spiral connecting dots
+                if (pattern.shapePoints.length > 1) {
+                    p.noFill();
+                    p.stroke(color);
+                    p.strokeWeight(2);
+                    p.beginShape();
+                    for (let i = 0; i < pattern.shapePoints.length; i++) {
+                        p.vertex(pattern.shapePoints[i].x, pattern.shapePoints[i].y);
+                    }
+                    p.endShape();
+                    
+                    // Draw circles at each point
+                    p.noStroke();
+                    p.fill(color);
+                    for (let i = 0; i < pattern.shapePoints.length; i++) {
+                        const point = pattern.shapePoints[i];
+                        p.ellipse(point.x, point.y, point.size, point.size);
+                    }
+                }
+            }
+            
+            function drawBinaryShape(pattern, color) {
+                p.noStroke();
+                p.fill(color);
+                
+                // Draw the binary shape with two different tones
+                p.beginShape();
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    p.vertex(pattern.shapePoints[i].x, pattern.shapePoints[i].y);
+                }
+                p.endShape(p.CLOSE);
+                
+                // Add dividing line
+                p.stroke(255, 255, 255, 100 * pattern.opacity);
+                p.strokeWeight(2);
+                p.line(-pattern.size, 0, pattern.size, 0);
+                
+                // Add binary symbols
+                p.noStroke();
+                p.fill(255, 255, 255, 150 * pattern.opacity);
+                p.textSize(pattern.size * 0.2);
+                p.text("1", 0, -pattern.size * 0.3);
+                p.text("0", 0, pattern.size * 0.3);
+            }
+            
+            function drawArrowsShape(pattern, color) {
+                p.fill(color);
+                p.noStroke();
+                
+                // Draw center circle
+                p.ellipse(0, 0, pattern.size * 0.6, pattern.size * 0.6);
+                
+                // Draw arrows
+                p.stroke(color);
+                p.strokeWeight(pattern.size * 0.05);
+                
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    const point = pattern.shapePoints[i];
+                    if (point.isArrow) {
+                        const endX = p.cos(point.arrowAngle) * (point.length + pattern.size * 0.3);
+                        const endY = p.sin(point.arrowAngle) * (point.length + pattern.size * 0.3);
+                        
+                        // Draw arrow line
+                        p.line(point.x, point.y, endX, endY);
+                        
+                        // Draw arrowhead
+                        const arrowSize = pattern.size * 0.1;
+                        p.push();
+                        p.translate(endX, endY);
+                        p.rotate(point.arrowAngle + p.PI/2);
+                        p.noStroke();
+                        p.fill(color);
+                        p.triangle(0, arrowSize, -arrowSize, -arrowSize, arrowSize, -arrowSize);
+                        p.pop();
+                    }
+                }
+            }
+            
+            function drawThoughtBubbles(pattern, color) {
+                p.fill(color);
+                p.noStroke();
+                
+                // Draw the thought bubbles
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    const point = pattern.shapePoints[i];
+                    if (point.isBubble) {
+                        // Draw bubble
+                        p.ellipse(point.x, point.y, point.size, point.size);
+                        
+                        // Draw small connector bubbles back to center
+                        const steps = 3;
+                        const distance = p.dist(0, 0, point.x, point.y);
+                        for (let j = 1; j <= steps; j++) {
+                            const ratio = 1 - j / (steps + 1);
+                            const bubbleX = point.x * ratio;
+                            const bubbleY = point.y * ratio;
+                            const bubbleSize = point.size * ratio * 0.5;
+                            p.ellipse(bubbleX, bubbleY, bubbleSize, bubbleSize);
+                        }
+                    }
+                }
+            }
+            
+            function drawExpandingShape(pattern, color) {
+                p.noFill();
+                
+                // Draw expanding concentric circles
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    const point = pattern.shapePoints[i];
+                    if (point.isRipple) {
+                        p.stroke(color);
+                        p.strokeWeight(3);
+                        p.ellipse(0, 0, point.radius * 2, point.radius * 2);
+                    }
+                }
+                
+                // Draw center
+                p.fill(color);
+                p.noStroke();
+                p.ellipse(0, 0, pattern.size * 0.3, pattern.size * 0.3);
+            }
+            
+            function drawFilterShape(pattern, color) {
+                // Draw filter shape with contour
+                p.stroke(color);
+                p.strokeWeight(2);
+                p.fill(color.levels[0], color.levels[1], color.levels[2], color.levels[3] * 0.3);
+                
+                p.beginShape();
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    p.vertex(pattern.shapePoints[i].x, pattern.shapePoints[i].y);
+                }
+                p.endShape(p.CLOSE);
+                
+                // Add filter lines
+                p.stroke(color);
+                p.strokeWeight(1);
+                for (let i = -pattern.size; i < pattern.size; i += pattern.size/5) {
+                    p.line(i, -pattern.size, i, pattern.size);
+                }
+            }
+            
+            function drawCloudShape(pattern, color) {
+                // Draw cloud shape for emotional reasoning
+                p.noStroke();
+                p.fill(color);
+                
+                // Draw main blob
+                p.beginShape();
+                for (let i = 0; i < pattern.shapePoints.length; i++) {
+                    const curr = pattern.shapePoints[i];
+                    const next = pattern.shapePoints[(i + 1) % pattern.shapePoints.length];
+                    
+                    // Use bezier vertices for smooth cloud shape
+                    if (i === 0) {
+                        p.vertex(curr.x, curr.y);
+                    }
+                    p.bezierVertex(
+                        curr.controlPoint1X, curr.controlPoint1Y,
+                        next.controlPoint2X, next.controlPoint2Y,
+                        next.x, next.y
+                    );
+                }
+                p.endShape(p.CLOSE);
+                
+                // Add some small cloud puffs
+                for (let i = 0; i < 3; i++) {
+                    const angle = p.random(p.TWO_PI);
+                    const dist = pattern.size * 0.7;
+                    const puffSize = pattern.size * p.random(0.2, 0.4);
+                    
+                    p.fill(color.levels[0], color.levels[1], color.levels[2], color.levels[3] * 0.7);
+                    p.ellipse(
+                        p.cos(angle) * dist,
+                        p.sin(angle) * dist,
+                        puffSize, puffSize
+                    );
+                }
             }
             
             function updateTherapeuticResponse(response) {
@@ -886,6 +1375,7 @@
                 pattern.beingProcessed = true;
                 pattern.processingProgress = 0;
                 pattern.targetColor = therapeuticColor;
+                pattern.reframeText = ""; // Will be set during processing
                 
                 // Slow down and stabilize the pattern
                 pattern.vx *= 0.2;
@@ -914,7 +1404,9 @@
                 p.fill(255, 255, 255, response.color[3]);
                 p.textAlign(p.CENTER, p.CENTER);
                 p.textSize(12);
-                p.text(response.type.name, 0, 0);
+                
+                // Draw wrapped therapeutic text
+                drawWrappedText(response.text, 0, 0, response.size * 0.8);
                 
                 p.pop();
             }
