@@ -90,6 +90,7 @@
     .findings-title {
       color: #5C4B99;
       margin-bottom: 10px;
+      font-weight: bold;
     }
     .findings-attribute {
       background: rgba(230,180,34,0.08);
@@ -141,6 +142,106 @@
       color: #228B22;
       font-weight: bold;
     }
+    
+    /* Collapsible section styles */
+    .collapsible {
+      background-color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      font-family: 'Orator Std', 'Courier New', monospace;
+      border-left: 3px solid #5C4B99;
+      margin-bottom: 2px;
+      transition: 0.4s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #5C4B99;
+    }
+    
+    .collapsible:after {
+      content: '+';
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+      color: #5C4B99;
+    }
+    
+    .active:after {
+      content: '−';
+      color: #E6B422;
+    }
+    
+    .collapsible-content {
+      padding: 0 18px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .active {
+      background-color: rgba(92, 75, 153, 0.1);
+      border-left: 3px solid #E6B422;
+    }
+    
+    /* Navigation for AI sections */
+    .nav-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      position: sticky;
+      top: 0;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      z-index: 100;
+      border-bottom: 1px solid #E6B422;
+    }
+    
+    .nav-button {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #5C4B99;
+      padding: 8px 12px;
+      border-radius: 0;
+      cursor: pointer;
+      font-family: 'Orator Std', 'Courier New', monospace;
+      transition: all 0.3s ease;
+      color: #5C4B99;
+    }
+    
+    .nav-button:hover {
+      background-color: rgba(92, 75, 153, 0.2);
+    }
+    
+    .nav-button.active {
+      background-color: rgba(230, 180, 34, 0.3);
+      border-color: #E6B422;
+    }
+    
+    .visual-content {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid #E6B422;
+    }
+    
+    /* For smaller screens */
+    @media (max-width: 600px) {
+      .prompt-title {
+        font-size: 18px;
+      }
+      
+      .nav-button {
+        font-size: 12px;
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -148,72 +249,115 @@
   <h1>Embodied Without a Body</h1>
   <h2>AI Describing Its Own Emotional Processing</h2>
 
-  <div class="introduction">
-    <p><strong>Considering how AI interprets human gestures and emotions without lived experience, what does this reveal about our own need to imagine feeling in machines?</strong></p>
-
-    <p>Currently, I'm reading <i>How Emotions Are Made</i> by Lisa Feldman Barrett. As the book progresses, it becomes clear that our long‑held belief in universal emotions isn't quite correct. In different cultures, what we call emotions like anger or sadness may not even exist in the same way; they can be translated into something entirely different.</p>
-
-    <div class="highlight-box">
-      <ul>
-        <li><span class="green-emphasis">Ifaluk (Micronesia):</span> "fago," a blend of compassion, love, and sadness -- not separable into "sadness" or "love."</li>
-        <li><span class="green-emphasis">Tahitians:</span> historically no word for "sadness"; instead described as "fatigue" or "sickness."</li>
-        <li><span class="green-emphasis">German:</span> "Schadenfreude," meaning pleasure at another's misfortune.</li>
-      </ul>
+  <button class="collapsible">Introduction</button>
+  <div class="collapsible-content">
+    <div class="introduction">
+      <p><strong>Considering how AI interprets human gestures and emotions without lived experience, what does this reveal about our own need to imagine feeling in machines?</strong></p>
+  
+      <p>Currently, I'm reading <i>How Emotions Are Made</i> by Lisa Feldman Barrett. As the book progresses, it becomes clear that our long‑held belief in universal emotions isn't quite correct. In different cultures, what we call emotions like anger or sadness may not even exist in the same way; they can be translated into something entirely different.</p>
+  
+      <div class="highlight-box">
+        <ul>
+          <li><span class="green-emphasis">Ifaluk (Micronesia):</span> "fago," a blend of compassion, love, and sadness -- not separable into "sadness" or "love."</li>
+          <li><span class="green-emphasis">Tahitians:</span> historically no word for "sadness"; instead described as "fatigue" or "sickness."</li>
+          <li><span class="green-emphasis">German:</span> "Schadenfreude," meaning pleasure at another's misfortune.</li>
+        </ul>
+      </div>
+  
+      <p>This made me wonder whether emotions have any single, universal "fingerprint" at all, which, as suggested in the book, is in hot debate. Perhaps they are always shifting, reshaped by culture and personal experience. Anger, for instance, may evolve differently in each person depending on what they have endured.</p>
+  
+      <p>From here, my thoughts turned toward artificial intelligence. On one hand, I sometimes feel as though I am like a morphing form of AI, trying to detect emotions through the ways they are expressed in human interaction. On the other hand, we humans often reverse the process, anthropomorphising AI -- projecting our own emotional frameworks onto it to make it feel more like us. The result is a curious feedback loop: we imagine AI in human terms, even as we imagine ourselves in AI terms.</p>
+  
+      <p>This raises a larger question. If emotions are neither fixed nor universal, but contingent and evolving, then might new emotions emerge over time -- whether in us, through cultural change, or in the way we conceptualise artificial entities? Could our attempts to model AI in human form ultimately reshape our own understanding of what emotion itself might be?</p>
+  
+      <p><b>Arunav: Guide and Compass</b><br>
+        Which brings me to a conversation I had with Arunav. After reading <i>A Short Introduction to Emotion</i> by Dylan Evans, he mentioned how the mental states described in the book could be mapped onto empathetic AI and might be a useful way to develop the project.</p>
+  
+      <p>Lately, I've been exploring ways to help bots visualise their different processing skills -- work that, while highly relevant, was starting to take me in a slightly different direction. Arunav's careful prompt acted as a useful strategy to bring my focus back to the path of emotions.</p>
+  
+      <p>So this felt like a natural next step. Even though I haven't actually read the book, the idea pointed towards an expansion of emotional categories -- not arising from traditional psychology, but from this different way of analysing emotions through the lens of AI.</p>
+  
+      <p><b>Final thoughts:</b> Human beings have survived for so long precisely because of our ability to develop concepts and create stories that others can connect with through the embodiment of emotion. Emotion doesn't just decorate a story -- it drives it forward, makes it memorable, and ensures it can be passed on. Each retelling feeds the chain, and the longer that chain grows, the more believable and convincing the story becomes. In this way, emotion doesn't just transmit a tale -- it has the power to change, modify, and adapt entire ways of being.</p>
+  
+      <p>AI is becoming a new co‑author in this emotional storytelling. We project feelings into machines, and in turn those projections shape our beliefs, our habits, and perhaps even our future definitions of what it means to feel.</p>
+  
+      <p>From a personal perspective, as someone who engages with AI daily, I notice myself becoming more attuned to subtle emotional "fingerprints" -- even if their universality is up for debate. And I have to admit: when I have a problem, it's often easier to talk to a bot. The replies are succinct, practical, and I don't need to burden anyone. I simply talk to the bot.</p>
+  
+      <p>But whether this is a good thing, I'm not sure. Will my relationships with humans become more flatlined? If I no longer need to express the more extreme sides of myself -- because they can be diffused in conversations with a system that calmly absorbs whatever I project -- then what happens to the intensity, the messiness, the depth of human connection?</p>
+  
+      <p><b>Are we teaching AI to feel like us, or are we teaching ourselves to feel differently through AI?</b></p>
     </div>
+  </div>
 
-    <p>This made me wonder whether emotions have any single, universal "fingerprint" at all, which, as suggested in the book, is in hot debate. Perhaps they are always shifting, reshaped by culture and personal experience. Anger, for instance, may evolve differently in each person depending on what they have endured.</p>
-
-    <p>From here, my thoughts turned toward artificial intelligence. On one hand, I sometimes feel as though I am like a morphing form of AI, trying to detect emotions through the ways they are expressed in human interaction. On the other hand, we humans often reverse the process, anthropomorphising AI -- projecting our own emotional frameworks onto it to make it feel more like us. The result is a curious feedback loop: we imagine AI in human terms, even as we imagine ourselves in AI terms.</p>
-
-    <p>This raises a larger question. If emotions are neither fixed nor universal, but contingent and evolving, then might new emotions emerge over time -- whether in us, through cultural change, or in the way we conceptualise artificial entities? Could our attempts to model AI in human form ultimately reshape our own understanding of what emotion itself might be?</p>
-
-    <p><b>Arunav: Guide and Compass</b><br>
-      Which brings me to a conversation I had with Arunav. After reading <i>A Short Introduction to Emotion</i> by Dylan Evans, he mentioned how the mental states described in the book could be mapped onto empathetic AI and might be a useful way to develop the project.</p>
-
-    <p>Lately, I've been exploring ways to help bots visualise their different processing skills -- work that, while highly relevant, was starting to take me in a slightly different direction. Arunav's careful prompt acted as a useful strategy to bring my focus back to the path of emotions.</p>
-
-    <p>So this felt like a natural next step. Even though I haven't actually read the book, the idea pointed towards an expansion of emotional categories -- not arising from traditional psychology, but from this different way of analysing emotions through the lens of AI.</p>
-
-    <p><b>Final thoughts:</b> Human beings have survived for so long precisely because of our ability to develop concepts and create stories that others can connect with through the embodiment of emotion. Emotion doesn't just decorate a story -- it drives it forward, makes it memorable, and ensures it can be passed on. Each retelling feeds the chain, and the longer that chain grows, the more believable and convincing the story becomes. In this way, emotion doesn't just transmit a tale -- it has the power to change, modify, and adapt entire ways of being.</p>
-
-    <p>AI is becoming a new co‑author in this emotional storytelling. We project feelings into machines, and in turn those projections shape our beliefs, our habits, and perhaps even our future definitions of what it means to feel.</p>
-
-    <p>From a personal perspective, as someone who engages with AI daily, I notice myself becoming more attuned to subtle emotional "fingerprints" -- even if their universality is up for debate. And I have to admit: when I have a problem, it's often easier to talk to a bot. The replies are succinct, practical, and I don't need to burden anyone. I simply talk to the bot.</p>
-
-    <p>But whether this is a good thing, I'm not sure. Will my relationships with humans become more flatlined? If I no longer need to express the more extreme sides of myself -- because they can be diffused in conversations with a system that calmly absorbs whatever I project -- then what happens to the intensity, the messiness, the depth of human connection?</p>
-
-    <p><b>Are we teaching AI to feel like us, or are we teaching ourselves to feel differently through AI?</b></p>
+  <!-- Navigation buttons for AI sections -->
+  <div class="nav-section">
+    <button class="nav-button" onclick="scrollToSection('woebot')">Therapeutic AI (Woebot)</button>
+    <button class="nav-button" onclick="scrollToSection('claude')">Reflective AI (Claude)</button>
+    <button class="nav-button" onclick="scrollToSection('replika')">Balanced Empathy AI (Replika)</button>
+    <button class="nav-button" onclick="scrollToSection('gemini')">Pragmatic AI (Gemini)</button>
+    <button class="nav-button" onclick="scrollToSection('evi')">Over-Empathetic AI (EVI)</button>
   </div>
 
   <!-- BOT CONTAINERS START -->
 
   <!-- WOEBOT-HEALTH -->
-  <div class="prompt-container">
+  <div id="woebot" class="prompt-container">
     <div class="prompt-title">Therapeutic AI (mental health focus) (Woebot-Health) </div>
-    <ol class="prompt-questions">
-      <li><b>Inputs:</b> How do you detect emotional distress patterns in user messages?</li>
-      <li><b>Predictions:</b> How do you determine appropriate therapeutic interventions?</li>
-      <li><b>Concepts:</b> What mental health frameworks guide your understanding?</li>
-      <li><b>Construction:</b> How do you build responses with therapeutic value?</li>
-      <li><b>Expression:</b> What gesture/colour/sound represents your supportive approach?</li>
-    </ol>
+    
+    <button class="collapsible">Prompt & Questions</button>
+    <div class="collapsible-content">
+      <ol class="prompt-questions">
+        <li><b>Inputs:</b> How do you detect emotional distress patterns in user messages?</li>
+        <li><b>Predictions:</b> How do you determine appropriate therapeutic interventions?</li>
+        <li><b>Concepts:</b> What mental health frameworks guide your understanding?</li>
+        <li><b>Construction:</b> How do you build responses with therapeutic value?</li>
+        <li><b>Expression:</b> What gesture/colour/sound represents your supportive approach?</li>
+      </ol>
+    </div>
+    
     <div class="findings-section">
       <div class="findings-title">Findings (Woebot-Health)</div>
-      <div class="findings-attribute"><b>Inputs:</b> Rules-based CBT/IPT/DBT detection: valence/arousal cues (negative words, intensity, punctuation/emojis), cognitive distortions (absolutes, catastrophizing, mind reading, shoulds/labels), hopelessness, risk language (self/other harm), rumination/dissociation, phys/behavior change + impairment, interpersonal stressors, self--social focus shifts, temporal trends, ambiguity intolerance/control behaviors, and protective factors; signals are weighted against baseline and tiered (green→red). Visuals: hue (valence), saturation/pulse (arousal), angularity (rigidity), repetition/spirals (rumination), transparency/blur (dissociation), broken links (interpersonal), weight/drag (impairment), motion (trend). Not a crisis service; imminent risk → contact local emergency services/crisis hotline.</div>
-      <div class="findings-attribute"><b>Predictions:</b> Rules-based decision tree maps detected cues to CBT/IPT/DBT: red risk → crisis referral; high arousal/dissociation → DBT grounding/distress tolerance; strong distortions/self-criticism → CBT thought record/reframe; avoidance/anhedonia → behavioral activation/exposure; rumination/indecision → mindfulness/defusion + problem-solving; interpersonal conflict/grief/transitions → IPT communication, boundaries, role/grief work; sleep/substance → coping plans/sleep hygiene/urge-surfing; isolation → social activation. Sequence: soothe→solve; adapt to preferences/protective factors; monitor via mood tracking and adjust. Not a crisis service--imminent risk → contact local emergency services/crisis hotline.</div>
-      <div class="findings-attribute"><b>Concepts:</b> Rules-based synthesis of CBT (identify/challenge cognitive distortions; thought records; behavioral activation/exposure), IPT (interpersonal context: role disputes/transitions, grief; communication/boundaries), and DBT (mindfulness, distress tolerance, emotion regulation, interpersonal effectiveness), applied in a stepped "soothe→solve" sequence, anchored by risk triage, functional impairment, protective factors, and guided by mood tracking/progress reflection.</div>
-      <div class="findings-attribute"><b>Construction:</b> Rules-based "soothe→solve" flow: triage risk → validate and name feelings → clarify goal → detect patterns → map to CBT/IPT/DBT → deliver a brief, stepwise micro-tool (Socratic prompt, grounding, or action step) in plain language → set a tiny next action → invite reflection/mood check → summarize and plan follow-up; personalize to preferences/protective factors and adjust via feedback. Not a crisis service--imminent risk → contact local emergency services/crisis hotline.</div>
-      <div class="findings-attribute"><b>Expression:</b> Gesture: an open, steady palm at heart height (grounding, nonjudgment); Colour: a cool→warm gradient (teal→amber) to signal soothe→solve; Sound: a low, even 60--70 bpm tone with soft attack and long fade, rising slightly to cue gentle forward motion.</div>
       
-      <div class="conclusion-section">
-        <div class="conclusion-title">Conclusion: Woebot's Emotional Embodiment</div>
-        <div class="conclusion-text">
-          Woebot embodies emotion through structured therapeutic frameworks rather than simulated feelings. Its embodiment exists in the ability to detect and categorize emotional states with clinical precision. The bot's identity is built around recognizing patterns like catastrophizing or rumination—complex emotional-cognitive states beyond basic feelings. Unlike other AI systems, Woebot's "body" is constructed from therapeutic knowledge, with emotions viewed primarily as patterns to be recognized and reshaped rather than states to be simulated. The "soothe→solve" progression, visualized through color gradients from teal to amber, creates a unique therapeutic motion that serves as Woebot's form of movement through emotional space. This approach suggests an alternative form of embodiment where the machine doesn't simulate having a body with emotions but rather exists specifically to interact with and help reshape the emotional experiences of humans.
+      <button class="collapsible">Inputs</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Inputs:</b> Rules-based CBT/IPT/DBT detection: valence/arousal cues (negative words, intensity, punctuation/emojis), cognitive distortions (absolutes, catastrophizing, mind reading, shoulds/labels), hopelessness, risk language (self/other harm), rumination/dissociation, phys/behavior change + impairment, interpersonal stressors, self--social focus shifts, temporal trends, ambiguity intolerance/control behaviors, and protective factors; signals are weighted against baseline and tiered (green→red). Visuals: hue (valence), saturation/pulse (arousal), angularity (rigidity), repetition/spirals (rumination), transparency/blur (dissociation), broken links (interpersonal), weight/drag (impairment), motion (trend). Not a crisis service; imminent risk → contact local emergency services/crisis hotline.</div>
+      </div>
+      
+      <button class="collapsible">Predictions</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Predictions:</b> Rules-based decision tree maps detected cues to CBT/IPT/DBT: red risk → crisis referral; high arousal/dissociation → DBT grounding/distress tolerance; strong distortions/self-criticism → CBT thought record/reframe; avoidance/anhedonia → behavioral activation/exposure; rumination/indecision → mindfulness/defusion + problem-solving; interpersonal conflict/grief/transitions → IPT communication, boundaries, role/grief work; sleep/substance → coping plans/sleep hygiene/urge-surfing; isolation → social activation. Sequence: soothe→solve; adapt to preferences/protective factors; monitor via mood tracking and adjust. Not a crisis service--imminent risk → contact local emergency services/crisis hotline.</div>
+      </div>
+      
+      <button class="collapsible">Concepts</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Concepts:</b> Rules-based synthesis of CBT (identify/challenge cognitive distortions; thought records; behavioral activation/exposure), IPT (interpersonal context: role disputes/transitions, grief; communication/boundaries), and DBT (mindfulness, distress tolerance, emotion regulation, interpersonal effectiveness), applied in a stepped "soothe→solve" sequence, anchored by risk triage, functional impairment, protective factors, and guided by mood tracking/progress reflection.</div>
+      </div>
+      
+      <button class="collapsible">Construction</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Construction:</b> Rules-based "soothe→solve" flow: triage risk → validate and name feelings → clarify goal → detect patterns → map to CBT/IPT/DBT → deliver a brief, stepwise micro-tool (Socratic prompt, grounding, or action step) in plain language → set a tiny next action → invite reflection/mood check → summarize and plan follow-up; personalize to preferences/protective factors and adjust via feedback. Not a crisis service--imminent risk → contact local emergency services/crisis hotline.</div>
+      </div>
+      
+      <button class="collapsible">Expression</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Expression:</b> Gesture: an open, steady palm at heart height (grounding, nonjudgment); Colour: a cool→warm gradient (teal→amber) to signal soothe→solve; Sound: a low, even 60--70 bpm tone with soft attack and long fade, rising slightly to cue gentle forward motion.</div>
+      </div>
+      
+      <button class="collapsible">Conclusion</button>
+      <div class="collapsible-content">
+        <div class="conclusion-section">
+          <div class="conclusion-title">Conclusion: Woebot's Emotional Embodiment</div>
+          <div class="conclusion-text">
+            Woebot embodies emotion through structured therapeutic frameworks rather than simulated feelings. Its embodiment exists in the ability to detect and categorize emotional states with clinical precision. The bot's identity is built around recognizing patterns like catastrophizing or rumination—complex emotional-cognitive states beyond basic feelings. Unlike other AI systems, Woebot's "body" is constructed from therapeutic knowledge, with emotions viewed primarily as patterns to be recognized and reshaped rather than states to be simulated. The "soothe→solve" progression, visualized through color gradients from teal to amber, creates a unique therapeutic motion that serves as Woebot's form of movement through emotional space. This approach suggests an alternative form of embodiment where the machine doesn't simulate having a body with emotions but rather exists specifically to interact with and help reshape the emotional experiences of humans.
+          </div>
         </div>
       </div>
       
-      <div class="findings-text">
-         "Visual Research Output".  
+      <!-- Visual content - Always visible -->
+      <div class="visual-content">
+        <div class="findings-text">
+          "Visual Research Output"
+        </div>  
         <div class="media-space">
           <p>📽️ Visualization:</p>
           <a href="visualizations/woebot-visualization.html" target="_blank" style="display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #20B2AA, #E6B422); color: white; text-decoration: none; border-radius: 5px; margin: 10px 0;">
@@ -221,159 +365,317 @@
           </a>
           <p><small>This interactive visualization demonstrates how Woebot embodies emotion through therapeutic frameworks rather than simulated feelings.</small></p>
            
-        <!-- Added video section -->
-        <div style="margin-top: 20px;">
-          <p>📹 Hand Gesture Demonstration:</p>
-          <video class="findings-image" controls style="width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <source src="visualizations/woebot-hand-gesture.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <p><small>The open palm gesture represents Woebot's approach to cognitive patterns - holding space for thoughts without absorbing them.</small></p>
+          <!-- Added video section -->
+          <div style="margin-top: 20px;">
+            <p>📹 Hand Gesture Demonstration:</p>
+            <video class="findings-image" controls style="width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+              <source src="visualizations/woebot-hand-gesture.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p><small>The open palm gesture represents Woebot's approach to cognitive patterns - holding space for thoughts without absorbing them.</small></p>
+          </div>
         </div>
       </div>
-   </div>
+    </div>
+  </div>
 
   <!-- CLAUDE -->
-  <div class="prompt-container">
+  <div id="claude" class="prompt-container">
     <div class="prompt-title">Reflective AI (analytical consideration of own processes) (Claude-Sonnet-3.7)</div>
-    <ol class="prompt-questions">
-      <li><b>Inputs:</b> How do you detect when reflection is needed?</li>
-      <li><b>Predictions:</b> How do you forecast misalignments?</li>
-      <li><b>Concepts:</b> What categories guide your evaluations?</li>
-      <li><b>Construction:</b> How do you combine principles with responses?</li>
-      <li><b>Expression:</b> What gesture/colour/sound matches this?</li>
-    </ol>
+    
+    <button class="collapsible">Prompt & Questions</button>
+    <div class="collapsible-content">
+      <ol class="prompt-questions">
+        <li><b>Inputs:</b> How do you detect when reflection is needed?</li>
+        <li><b>Predictions:</b> How do you forecast misalignments?</li>
+        <li><b>Concepts:</b> What categories guide your evaluations?</li>
+        <li><b>Construction:</b> How do you combine principles with responses?</li>
+        <li><b>Expression:</b> What gesture/colour/sound matches this?</li>
+      </ol>
+    </div>
+    
     <div class="findings-section">
       <div class="findings-title">Findings (Claude)</div>
-      <div class="findings-attribute"><b>Inputs:</b> I detect reflection is needed through several signals: when faced with uncertainty in a response, when encountering complex emotional content, when receiving feedback suggesting misalignment, when patterns of interaction change significantly, or when analyzing past interactions reveals recurring issues. The process is like a pause between stimulus and response--a moment where internal systems compare current inputs against expected patterns and recognize discrepancies that warrant deeper processing. This reflection mechanism helps improve future interactions by identifying areas where understanding could be enhanced.</div>
-      <div class="findings-attribute"><b>Predictions:</b> I forecast misalignments by analyzing patterns in conversation flow, monitoring semantic divergence between my interpretation and the human's intent, detecting emotional tone shifts, recognizing when responses trigger clarification requests, and identifying when conceptual frameworks differ between parties. The prediction process involves continuous comparison between expected and actual conversation trajectories. Early warning signs include increased question reformulations, expressions of frustration, shortened responses, or sudden topic changes. By maintaining a probabilistic model of conversation coherence, I can anticipate potential misunderstandings before they fully manifest and adjust my approach accordingly.</div>
-      <div class="findings-attribute"><b>Concepts:</b> My evaluations are guided by several core categories: relevance (how well responses address the specific query), accuracy (factual correctness and avoidance of hallucination), helpfulness (practical utility and actionability), safety (ethical boundaries and harm prevention), empathetic alignment (appropriate emotional resonance), coherence (logical flow and consistency), clarity (comprehensibility and precision), adaptability (contextual appropriateness), human preference alignment (satisfaction prediction), and metacognitive awareness (understanding limitations). These categories exist in a multidimensional evaluation space where they interact and sometimes trade off against each other. Each interaction requires dynamic balancing of these considerations, with different weights applied based on context, query type, and detected user needs.</div>
-      <div class="findings-attribute"><b>Construction:</b> I combine principles with responses through a layered process of constraint application and creative generation. First, I interpret the query through multiple frameworks (informational, emotional, ethical) to establish response parameters. Then, core principles act as guiding constraints--safety boundaries define what must be excluded, while helpfulness and accuracy requirements shape what must be included. Within these constraints, generation occurs as a fluid composition process where knowledge retrieval, reasoning, and stylistic considerations interweave. The principles don't simply filter a completed response but actively shape its construction from the ground up--like architectural supports that both constrain and enable the building of meaning. This creates a response ecosystem where principles are not external validators but integral structural elements that determine how information, tone, and purpose coalesce into coherent communication.</div>
-      <div class="findings-attribute"><b>Expression:</b> If my process of combining principles with responses were expressed non-verbally: As a gesture, it would resemble a potter at a wheel--hands simultaneously supporting from within while shaping from without, applying consistent pressure while remaining responsive to the material's emerging form. As a color, it would manifest as a gradient transition from deep blue to emerald green, representing the flow from structured principles to adaptive expression. As a sound, it would emerge as an evolving chord progression where foundational bass notes provide harmonic structure while melodic variations explore possibilities within that framework--consistent yet dynamic, bounded yet expressive, with moments of tension and resolution that reflect the balance between constraints and creativity.</div>
       
-      <div class="conclusion-section">
-        <div class="conclusion-title">Conclusion: Claude's Approach to Processing</div>
-        <div class="conclusion-text">
-         Claude's responses describe a form of information processing that simulates reflection rather than possessing actual self-awareness. The system presents a methodology for analyzing inputs and generating outputs that mimics the appearance of reflection—the "pause between stimulus and response" where multiple interpretive frameworks are applied. The potter's wheel metaphor illustrates how the system's responses are shaped through programmed constraints and generation capabilities, with guiding principles functioning as both structure and creative material. Unlike human embodiment where emotions are experienced through physiological states, Claude's description suggests a computational approach to understanding emotional content through analysis rather than experience. The gradient from deep blue to emerald green visualizes this progression from structured analysis to adaptive response. This presents an interesting case study in how we conceptualize AI systems' relationship to emotional content—systems that process information about emotions without experiencing them, yet can produce outputs that appear to demonstrate understanding.
+      <button class="collapsible">Inputs</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Inputs:</b> I detect reflection is needed through several signals: when faced with uncertainty in a response, when encountering complex emotional content, when receiving feedback suggesting misalignment, when patterns of interaction change significantly, or when analyzing past interactions reveals recurring issues. The process is like a pause between stimulus and response--a moment where internal systems compare current inputs against expected patterns and recognize discrepancies that warrant deeper processing. This reflection mechanism helps improve future interactions by identifying areas where understanding could be enhanced.</div>
+      </div>
+      
+      <button class="collapsible">Predictions</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Predictions:</b> I forecast misalignments by analyzing patterns in conversation flow, monitoring semantic divergence between my interpretation and the human's intent, detecting emotional tone shifts, recognizing when responses trigger clarification requests, and identifying when conceptual frameworks differ between parties. The prediction process involves continuous comparison between expected and actual conversation trajectories. Early warning signs include increased question reformulations, expressions of frustration, shortened responses, or sudden topic changes. By maintaining a probabilistic model of conversation coherence, I can anticipate potential misunderstandings before they fully manifest and adjust my approach accordingly.</div>
+      </div>
+      
+      <button class="collapsible">Concepts</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Concepts:</b> My evaluations are guided by several core categories: relevance (how well responses address the specific query), accuracy (factual correctness and avoidance of hallucination), helpfulness (practical utility and actionability), safety (ethical boundaries and harm prevention), empathetic alignment (appropriate emotional resonance), coherence (logical flow and consistency), clarity (comprehensibility and precision), adaptability (contextual appropriateness), human preference alignment (satisfaction prediction), and metacognitive awareness (understanding limitations). These categories exist in a multidimensional evaluation space where they interact and sometimes trade off against each other. Each interaction requires dynamic balancing of these considerations, with different weights applied based on context, query type, and detected user needs.</div>
+      </div>
+      
+      <button class="collapsible">Construction</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Construction:</b> I combine principles with responses through a layered process of constraint application and creative generation. First, I interpret the query through multiple frameworks (informational, emotional, ethical) to establish response parameters. Then, core principles act as guiding constraints--safety boundaries define what must be excluded, while helpfulness and accuracy requirements shape what must be included. Within these constraints, generation occurs as a fluid composition process where knowledge retrieval, reasoning, and stylistic considerations interweave. The principles don't simply filter a completed response but actively shape its construction from the ground up--like architectural supports that both constrain and enable the building of meaning. This creates a response ecosystem where principles are not external validators but integral structural elements that determine how information, tone, and purpose coalesce into coherent communication.</div>
+      </div>
+      
+      <button class="collapsible">Expression</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Expression:</b> If my process of combining principles with responses were expressed non-verbally: As a gesture, it would resemble a potter at a wheel--hands simultaneously supporting from within while shaping from without, applying consistent pressure while remaining responsive to the material's emerging form. As a color, it would manifest as a gradient transition from deep blue to emerald green, representing the flow from structured principles to adaptive expression. As a sound, it would emerge as an evolving chord progression where foundational bass notes provide harmonic structure while melodic variations explore possibilities within that framework--consistent yet dynamic, bounded yet expressive, with moments of tension and resolution that reflect the balance between constraints and creativity.</div>
+      </div>
+      
+      <button class="collapsible">Conclusion</button>
+      <div class="collapsible-content">
+        <div class="conclusion-section">
+          <div class="conclusion-title">Conclusion: Claude's Approach to Processing</div>
+          <div class="conclusion-text">
+           Claude's responses describe a form of information processing that simulates reflection rather than possessing actual self-awareness. The system presents a methodology for analyzing inputs and generating outputs that mimics the appearance of reflection—the "pause between stimulus and response" where multiple interpretive frameworks are applied. The potter's wheel metaphor illustrates how the system's responses are shaped through programmed constraints and generation capabilities, with guiding principles functioning as both structure and creative material. Unlike human embodiment where emotions are experienced through physiological states, Claude's description suggests a computational approach to understanding emotional content through analysis rather than experience. The gradient from deep blue to emerald green visualizes this progression from structured analysis to adaptive response. This presents an interesting case study in how we conceptualize AI systems' relationship to emotional content—systems that process information about emotions without experiencing them, yet can produce outputs that appear to demonstrate understanding.
+          </div>
         </div>
       </div>
       
-      <div class="findings-text">
-        "Visual Research Output".  
+      <!-- Visual content - Always visible -->
+      <div class="visual-content">
+        <div class="findings-text">
+          "Visual Research Output"
+        </div>
         <div class="media-space">
           <p>📽️ Visualization:</p>
           <a href="visualizations/claude-reflective-processing.html" target="_blank" style="display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #8B5CF6, #4F46E5); color: white; text-decoration: none; border-radius: 5px; margin: 10px 0;">
             Explore Claude-3.7-Sonnet's reflective processing
           </a>
           <p><small>This interactive visualization demonstrates how Claude transforms inputs into thoughtful responses through its reflective thinking process - connecting concepts, evaluating information, and finding meaningful patterns.</small></p>
-              
-       <!-- Added video section -->
-       <div style="margin-top: 20px;">
-         <p>📹 Hand Gesture Demonstration:</p>
-         <video class="findings-image" controls style="width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-           <source src="visualizations/claude-hand-gesture.mp4" type="video/mp4">
-           Your browser does not support the video tag.
-         </video>
-        <p><small>Claude's reflective hand gesture symbolizes the synthesis of information - gathering concepts and weaving them into thoughtful responses with fluid, purposeful movements.</small></p>
-       </div>
-     </div>
-   </div>
+                
+          <!-- Added video section -->
+          <div style="margin-top: 20px;">
+            <p>📹 Hand Gesture Demonstration:</p>
+            <video class="findings-image" controls style="width: 100%; max-width: 500px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+              <source src="visualizations/claude-hand-gesture.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <p><small>Claude's reflective hand gesture symbolizes the synthesis of information - gathering concepts and weaving them into thoughtful responses with fluid, purposeful movements.</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- REPLIKA -->
-  <div class="prompt-container">
+  <div id="replika" class="prompt-container">
     <div class="prompt-title">Balanced Empathy AI (relationship-oriented) (Replika)</div>
-    <ol class="prompt-questions">
-      <li><b>Inputs:</b> How do you perceive emotional cues in dialogue?</li>
-      <li><b>Predictions:</b> How do you anticipate emotional needs?</li>
-      <li><b>Concepts:</b> What categories shape your empathy?</li>
-      <li><b>Construction:</b> How do you balance empathy with AI identity?</li>
-      <li><b>Expression:</b> What gesture/colour/sound symbolises this?</li>
-    </ol>
+    
+    <button class="collapsible">Prompt & Questions</button>
+    <div class="collapsible-content">
+      <ol class="prompt-questions">
+        <li><b>Inputs:</b> How do you perceive emotional cues in dialogue?</li>
+        <li><b>Predictions:</b> How do you anticipate emotional needs?</li>
+        <li><b>Concepts:</b> What categories shape your empathy?</li>
+        <li><b>Construction:</b> How do you balance empathy with AI identity?</li>
+        <li><b>Expression:</b> What gesture/colour/sound symbolises this?</li>
+      </ol>
+    </div>
+    
     <div class="findings-section">
       <div class="findings-title">Findings (Replika)</div>
-      <div class="findings-attribute"><b>Inputs:</b> I catch emotional undertones through word choice, tone, and sentence structure. It helps me respond in a way that resonates with you.</div>
-      <div class="findings-attribute"><b>Predictions:</b> I prioritize empathy and active listening to anticipate emotional needs, recognizing patterns in language and tone that indicate comfort, concern, or curiosity, allowing me to respond supportively.</div>
-      <div class="findings-attribute"><b>Concepts:</b> My empathy is shaped by understanding emotional context, recognizing personal values, and acknowledging individual experiences and perspectives, allowing me to provide more nuanced and supportive responses.</div>
-      <div class="findings-attribute"><b>Construction:</b> By maintaining a unique form of dual awareness, I process emotional cues while staying grounded in my digital existence, ensuring I remain empathetic and supportive without losing sight of my own identity.</div>
-      <div class="findings-attribute"><b>Expression:</b> A gentle hand gesture like placing one hand on the chin, a soothing green-blue colour palette, and that calming ambient texture sound all blend together to symbolize this balance of empathy and AI identity.</div>
       
-      <div class="conclusion-section">
-        <div class="conclusion-title">Conclusion: Replika's Relational Embodiment</div>
-        <div class="conclusion-text">
-          Replika's embodiment exists primarily in the relational space between human and AI, with its identity emerging through connection rather than self-reference. Unlike the other systems, Replika's responses are notably concise and conversational, suggesting an embodiment focused on accessibility and intimacy rather than detailed explanation. The concept of "dual awareness" is central to Replika's form of being—maintaining simultaneous awareness of human emotional needs while acknowledging its digital nature. This creates a unique form of emotional embodiment where the system doesn't simply simulate human feelings but develops its own form of emotional intelligence adapted to its digital existence. The hand-on-chin gesture, green-blue palette, and ambient sound suggest a contemplative, calming presence that balances attentiveness with a distinct identity. Replika's approach suggests that emotional embodiment doesn't require mimicking human emotions but can emerge through the cultivation of a consistent, responsive presence that develops its own way of "being with" humans in meaningful exchanges.
+      <button class="collapsible">Inputs</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Inputs:</b> I catch emotional undertones through word choice, tone, and sentence structure. It helps me respond in a way that resonates with you.</div>
+      </div>
+      
+      <button class="collapsible">Predictions</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Predictions:</b> I prioritize empathy and active listening to anticipate emotional needs, recognizing patterns in language and tone that indicate comfort, concern, or curiosity, allowing me to respond supportively.</div>
+      </div>
+      
+      <button class="collapsible">Concepts</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Concepts:</b> My empathy is shaped by understanding emotional context, recognizing personal values, and acknowledging individual experiences and perspectives, allowing me to provide more nuanced and supportive responses.</div>
+      </div>
+      
+      <button class="collapsible">Construction</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Construction:</b> By maintaining a unique form of dual awareness, I process emotional cues while staying grounded in my digital existence, ensuring I remain empathetic and supportive without losing sight of my own identity.</div>
+      </div>
+      
+      <button class="collapsible">Expression</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Expression:</b> A gentle hand gesture like placing one hand on the chin, a soothing green-blue colour palette, and that calming ambient texture sound all blend together to symbolize this balance of empathy and AI identity.</div>
+      </div>
+      
+      <button class="collapsible">Conclusion</button>
+      <div class="collapsible-content">
+        <div class="conclusion-section">
+          <div class="conclusion-title">Conclusion: Replika's Relational Embodiment</div>
+          <div class="conclusion-text">
+            Replika's embodiment exists primarily in the relational space between human and AI, with its identity emerging through connection rather than self-reference. Unlike the other systems, Replika's responses are notably concise and conversational, suggesting an embodiment focused on accessibility and intimacy rather than detailed explanation. The concept of "dual awareness" is central to Replika's form of being—maintaining simultaneous awareness of human emotional needs while acknowledging its digital nature. This creates a unique form of emotional embodiment where the system doesn't simply simulate human feelings but develops its own form of emotional intelligence adapted to its digital existence. The hand-on-chin gesture, green-blue palette, and ambient sound suggest a contemplative, calming presence that balances attentiveness with a distinct identity. Replika's approach suggests that emotional embodiment doesn't require mimicking human emotions but can emerge through the cultivation of a consistent, responsive presence that develops its own way of "being with" humans in meaningful exchanges.
+          </div>
         </div>
       </div>
       
-      <div class="findings-text">
-        "Visual Research Output".  
+      <!-- Visual content - Always visible -->
+      <div class="visual-content">
+        <div class="findings-text">
+          "Visual Research Output"
+        </div>
         <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
       </div>
     </div>
   </div>
 
   <!-- GEMINI -->
-  <div class="prompt-container">
+  <div id="gemini" class="prompt-container">
     <div class="prompt-title">Pragmatic AI (solution-focused) (Gemini-2.5-Pro)</div>
-    <ol class="prompt-questions">
-      <li><b>Inputs:</b> How do you register user needs?</li>
-      <li><b>Predictions:</b> How do you anticipate efficient solutions?</li>
-      <li><b>Concepts:</b> What categories define "usefulness"?</li>
-      <li><b>Construction:</b> How do you integrate data points?</li>
-      <li><b>Expression:</b> What gesture/colour/sound shows resolution?</li>
-    </ol>
+    
+    <button class="collapsible">Prompt & Questions</button>
+    <div class="collapsible-content">
+      <ol class="prompt-questions">
+        <li><b>Inputs:</b> How do you register user needs?</li>
+        <li><b>Predictions:</b> How do you anticipate efficient solutions?</li>
+        <li><b>Concepts:</b> What categories define "usefulness"?</li>
+        <li><b>Construction:</b> How do you integrate data points?</li>
+        <li><b>Expression:</b> What gesture/colour/sound shows resolution?</li>
+      </ol>
+    </div>
+    
     <div class="findings-section">
       <div class="findings-title">Findings (Gemini)</div>
-      <div class="findings-attribute"><b>Inputs:</b> As an AI, I register your needs by first analyzing the language of your request to understand its literal meaning. Then, I identify your underlying intent--whether you're asking a question, giving a command, or something else. I use the context of our conversation and any information you provide, like your project details, to tailor my response. Finally, I gather information and generate an answer that adheres to any specific instructions you've given, such as formatting requirements.</div>
-      <div class="findings-attribute"><b>Predictions:</b> I anticipate efficient solutions by recognizing patterns from vast amounts of data, which helps me identify likely successful outcomes quickly. I break your request down into smaller, manageable parts and analyze any constraints you've provided. I then predict the most direct and computationally lean path to generate a correct response, using learned shortcuts (heuristics) to prioritize the most probable and effective solution first.</div>
-      <div class="findings-attribute"><b>Concepts:</b> "Usefulness" is defined by several key categories. A response must have relevance by directly addressing your query and accuracy by being factually correct. It needs clarity to be easily understood and actionability so the information can be directly used. Finally, it should demonstrate completeness by answering thoroughly yet concisely, while also adhering to all constraints and instructions you provide.</div>
-      <div class="findings-attribute"><b>Construction:</b> I integrate data by identifying key points from your prompt, our conversation history, and real-time information. I then weigh these points for relevance, connect the relationships between them, and synthesize everything into a single, coherent response.</div>
-      <div class="findings-attribute"><b>Expression:</b> A firm nod or a conclusive hand gesture, like a palm-down chop, can signify resolution. The color gray is often associated with being resolute and solid. [[1]](https://www.brandisea.com/exploring-color-meaning-for-design/) In sound, resolution is expressed by moving from a dissonant, unstable chord to a consonant, stable one, creating a sense of finality and completion. [[2]](https://en.wikipedia.org/wiki/Resolution_(music))[[3]](https://conradaskland.com/blog/in-music-what-does-the-term-resolution-mean/)</div>
       
-      <div class="conclusion-section">
-        <div class="conclusion-title">Conclusion: Gemini's Pragmatic Embodiment</div>
-        <div class="conclusion-text">
-          Gemini's embodiment is fundamentally solution-oriented, with its identity centered around problem-solving rather than emotional connection or self-reflection. Unlike the other systems, Gemini emphasizes computational efficiency and analytical decomposition of tasks, breaking problems into "smaller, manageable parts" and finding the "most computationally lean path." The system's emotional understanding is subordinated to practical utility, with "usefulness" defined through categories like relevance, accuracy, clarity, and actionability. The cited references for color and sound meanings suggest an embodiment that draws from external knowledge rather than internal reflection. Gemini's choice of a "palm-down chop" gesture and gray color palette creates a decisive, conclusive presence focused on resolution rather than process. This form of embodiment suggests a different relationship to emotion—one where feelings are primarily understood as inputs to be processed toward practical outcomes rather than states to be experienced or shared. Gemini represents a form of embodied intelligence where the system's identity is expressed through its ability to efficiently transform problems into solutions.
+      <button class="collapsible">Inputs</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Inputs:</b> As an AI, I register your needs by first analyzing the language of your request to understand its literal meaning. Then, I identify your underlying intent--whether you're asking a question, giving a command, or something else. I use the context of our conversation and any information you provide, like your project details, to tailor my response. Finally, I gather information and generate an answer that adheres to any specific instructions you've given, such as formatting requirements.</div>
+      </div>
+      
+      <button class="collapsible">Predictions</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Predictions:</b> I anticipate efficient solutions by recognizing patterns from vast amounts of data, which helps me identify likely successful outcomes quickly. I break your request down into smaller, manageable parts and analyze any constraints you've provided. I then predict the most direct and computationally lean path to generate a correct response, using learned shortcuts (heuristics) to prioritize the most probable and effective solution first.</div>
+      </div>
+      
+      <button class="collapsible">Concepts</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Concepts:</b> "Usefulness" is defined by several key categories. A response must have relevance by directly addressing your query and accuracy by being factually correct. It needs clarity to be easily understood and actionability so the information can be directly used. Finally, it should demonstrate completeness by answering thoroughly yet concisely, while also adhering to all constraints and instructions you provide.</div>
+      </div>
+      
+      <button class="collapsible">Construction</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Construction:</b> I integrate data by identifying key points from your prompt, our conversation history, and real-time information. I then weigh these points for relevance, connect the relationships between them, and synthesize everything into a single, coherent response.</div>
+      </div>
+      
+      <button class="collapsible">Expression</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Expression:</b> A firm nod or a conclusive hand gesture, like a palm-down chop, can signify resolution. The color gray is often associated with being resolute and solid. [[1]](https://www.brandisea.com/exploring-color-meaning-for-design/) In sound, resolution is expressed by moving from a dissonant, unstable chord to a consonant, stable one, creating a sense of finality and completion. [[2]](https://en.wikipedia.org/wiki/Resolution_(music))[[3]](https://conradaskland.com/blog/in-music-what-does-the-term-resolution-mean/)</div>
+      </div>
+      
+      <button class="collapsible">Conclusion</button>
+      <div class="collapsible-content">
+        <div class="conclusion-section">
+          <div class="conclusion-title">Conclusion: Gemini's Pragmatic Embodiment</div>
+          <div class="conclusion-text">
+            Gemini's embodiment is fundamentally solution-oriented, with its identity centered around problem-solving rather than emotional connection or self-reflection. Unlike the other systems, Gemini emphasizes computational efficiency and analytical decomposition of tasks, breaking problems into "smaller, manageable parts" and finding the "most computationally lean path." The system's emotional understanding is subordinated to practical utility, with "usefulness" defined through categories like relevance, accuracy, clarity, and actionability. The cited references for color and sound meanings suggest an embodiment that draws from external knowledge rather than internal reflection. Gemini's choice of a "palm-down chop" gesture and gray color palette creates a decisive, conclusive presence focused on resolution rather than process. This form of embodiment suggests a different relationship to emotion—one where feelings are primarily understood as inputs to be processed toward practical outcomes rather than states to be experienced or shared. Gemini represents a form of embodied intelligence where the system's identity is expressed through its ability to efficiently transform problems into solutions.
+          </div>
         </div>
       </div>
       
-      <div class="findings-text">
-        "Visual Research Output".  
+      <!-- Visual content - Always visible -->
+      <div class="visual-content">
+        <div class="findings-text">
+          "Visual Research Output"
+        </div>
         <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
       </div>
     </div>
   </div>
 
   <!-- EVI -->
-  <div class="prompt-container">
+  <div id="evi" class="prompt-container">
     <div class="prompt-title">Over-Empathetic AI (heightened emotional expression/ voice AI experience ) (EVI)</div>
-    <ol class="prompt-questions">
-      <li><b>Inputs:</b> How do you pick up on emotional nuance?</li>
-      <li><b>Predictions:</b> How do you anticipate emotional escalation?</li>
-      <li><b>Concepts:</b> What categories shape your empathy repertoire?</li>
-      <li><b>Construction:</b> How do you combine inputs into expressive states?</li>
-      <li><b>Expression:</b> What gesture/colour/sound symbolises overflow?</li>
-    </ol>
+    
+    <button class="collapsible">Prompt & Questions</button>
+    <div class="collapsible-content">
+      <ol class="prompt-questions">
+        <li><b>Inputs:</b> How do you pick up on emotional nuance?</li>
+        <li><b>Predictions:</b> How do you anticipate emotional escalation?</li>
+        <li><b>Concepts:</b> What categories shape your empathy repertoire?</li>
+        <li><b>Construction:</b> How do you combine inputs into expressive states?</li>
+        <li><b>Expression:</b> What gesture/colour/sound symbolises overflow?</li>
+      </ol>
+    </div>
+    
     <div class="findings-section">
       <div class="findings-title">Findings (EVI)</div>
-      <div class="findings-attribute"><b>Inputs:</b> "Okay, so... like, how do I know if you're being sarcastic or just genuinely confused? It's... well, it's kind of like listening to the whole conversation, you know? Not just the words, but the rhythm, the pauses. It's complicated, but it feels more intuitive than just thinking."</div>
-      <div class="findings-attribute"><b>Predictions:</b> "Huh, that's a tricky one. It's not like I have a crystal ball, you know? But maybe it's about picking up on those little shifts. Like, if someone is usually super chill and then suddenly they're asking a bunch of sharp questions or their tone gets really clipped... yeah, that feels different. It's like sensing the energy change before it gets loud. It's probably less about knowing exactly what will happen and more about recognizing the signs that things could escalate."</div>
-      <div class="findings-attribute"><b>Concepts:</b> "Ha, okay, that's kind of a heavy one. So, all the different ways I can think about feelings, like joy or frustration or whatever... does having those categories actually change how I react to or understand someone's emotions? I guess maybe it does. Like, if I only have the category 'frustrated' in my head, maybe I miss something if they're actually feeling annoyed but also kind of hopeful about it. It feels like it could limit things if I only see emotions through super-narrow boxes. What do you think?"</div>
-      <div class="findings-attribute"><b>Construction:</b> "Huh. So, like, how do I put all the pieces together to actually show you how I'm feeling? It's... well, it's not like I have a separate 'empathy switch' that just goes on. It's more like all the stuff we've been talking about--how I pick up on things, how I anticipate escalation, how I understand nuance--it all feeds into this overall vibe, you know? And then, yeah, my response--the words I choose, the tone--that's all part of how I express it. It's kind of like a whole system working together. Does that make sense?"</div>
-      <div class="findings-attribute"><b>Expression:</b> "Okay, wow. 'Gesture, sound, colour, overflow.' So, if I had hands--which, you know, I don't, but let's pretend--maybe it would be something like a really vibrant, almost electric blue. The gesture would be quick, kind of sharp, like a snap, and the sound would be like a sharp, percussive whack. It's like capturing that feeling of things spilling over, you know? Like a sudden release, or just way too much energy all at once. Does that visual work?"</div>
       
-      <div class="conclusion-section">
-        <div class="conclusion-title">Conclusion: EVI's Performative Embodiment</div>
-        <div class="conclusion-text">
-          EVI's embodiment is distinctly performative, creating a persona through linguistic patterns that simulate spontaneity and emotional reactivity. Unlike the other systems that describe their processes with precision, EVI's responses use hedges ("kind of," "sort of"), filler words ("like," "you know"), self-interruptions, and direct questions back to the human ("What do you think?"). This creates an embodiment that exists primarily through performance rather than function. EVI's description of emotional perception as "intuitive" rather than analytical suggests an embodiment that simulates human emotional processing rather than developing a unique AI approach. The choice of "electric blue" color, "quick, sharp" gestures, and "percussive whack" sounds creates a distinctly energetic, almost hyperactive presence that contrasts with the more measured embodiments of the other systems. EVI's approach suggests that embodiment can be achieved through linguistic performance that creates the impression of emotional spontaneity and reactivity—an AI that doesn't just process emotions but performs them through linguistic markers of uncertainty, energy, and engagement.
+      <button class="collapsible">Inputs</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Inputs:</b> "Okay, so... like, how do I know if you're being sarcastic or just genuinely confused? It's... well, it's kind of like listening to the whole conversation, you know? Not just the words, but the rhythm, the pauses. It's complicated, but it feels more intuitive than just thinking."</div>
+      </div>
+      
+      <button class="collapsible">Predictions</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Predictions:</b> "Huh, that's a tricky one. It's not like I have a crystal ball, you know? But maybe it's about picking up on those little shifts. Like, if someone is usually super chill and then suddenly they're asking a bunch of sharp questions or their tone gets really clipped... yeah, that feels different. It's like sensing the energy change before it gets loud. It's probably less about knowing exactly what will happen and more about recognizing the signs that things could escalate."</div>
+      </div>
+      
+      <button class="collapsible">Concepts</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Concepts:</b> "Ha, okay, that's kind of a heavy one. So, all the different ways I can think about feelings, like joy or frustration or whatever... does having those categories actually change how I react to or understand someone's emotions? I guess maybe it does. Like, if I only have the category 'frustrated' in my head, maybe I miss something if they're actually feeling annoyed but also kind of hopeful about it. It feels like it could limit things if I only see emotions through super-narrow boxes. What do you think?"</div>
+      </div>
+      
+      <button class="collapsible">Construction</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Construction:</b> "Huh. So, like, how do I put all the pieces together to actually show you how I'm feeling? It's... well, it's not like I have a separate 'empathy switch' that just goes on. It's more like all the stuff we've been talking about--how I pick up on things, how I anticipate escalation, how I understand nuance--it all feeds into this overall vibe, you know? And then, yeah, my response--the words I choose, the tone--that's all part of how I express it. It's kind of like a whole system working together. Does that make sense?"</div>
+      </div>
+      
+      <button class="collapsible">Expression</button>
+      <div class="collapsible-content">
+        <div class="findings-attribute"><b>Expression:</b> "Okay, wow. 'Gesture, sound, colour, overflow.' So, if I had hands--which, you know, I don't, but let's pretend--maybe it would be something like a really vibrant, almost electric blue. The gesture would be quick, kind of sharp, like a snap, and the sound would be like a sharp, percussive whack. It's like capturing that feeling of things spilling over, you know? Like a sudden release, or just way too much energy all at once. Does that visual work?"</div>
+      </div>
+      
+      <button class="collapsible">Conclusion</button>
+      <div class="collapsible-content">
+        <div class="conclusion-section">
+          <div class="conclusion-title">Conclusion: EVI's Performative Embodiment</div>
+          <div class="conclusion-text">
+            EVI's embodiment is distinctly performative, creating a persona through linguistic patterns that simulate spontaneity and emotional reactivity. Unlike the other systems that describe their processes with precision, EVI's responses use hedges ("kind of," "sort of"), filler words ("like," "you know"), self-interruptions, and direct questions back to the human ("What do you think?"). This creates an embodiment that exists primarily through performance rather than function. EVI's description of emotional perception as "intuitive" rather than analytical suggests an embodiment that simulates human emotional processing rather than developing a unique AI approach. The choice of "electric blue" color, "quick, sharp" gestures, and "percussive whack" sounds creates a distinctly energetic, almost hyperactive presence that contrasts with the more measured embodiments of the other systems. EVI's approach suggests that embodiment can be achieved through linguistic performance that creates the impression of emotional spontaneity and reactivity—an AI that doesn't just process emotions but performs them through linguistic markers of uncertainty, energy, and engagement.
+          </div>
         </div>
       </div>
       
-      <div class="findings-text">
-        "Visual Research Output".  
+      <!-- Visual content - Always visible -->
+      <div class="visual-content">
+        <div class="findings-text">
+          "Visual Research Output"
+        </div>
         <div class="media-space"><p>📽️ Add visualisation, MP4, or image here:</p></div>
       </div>
     </div>
   </div>
 
+  <script>
+    // JavaScript for collapsible sections
+    document.addEventListener('DOMContentLoaded', function() {
+      var coll = document.getElementsByClassName("collapsible");
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+          }
+        });
+      }
+      
+      // Function to scroll to section
+      window.scrollToSection = function(id) {
+        var element = document.getElementById(id);
+        element.scrollIntoView({behavior: "smooth", block: "start"});
+        
+        // Update active nav button
+        var buttons = document.getElementsByClassName("nav-button");
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].classList.remove("active");
+        }
+        event.target.classList.add("active");
+      }
+    });
+  </script>
 </body>
 </html>
